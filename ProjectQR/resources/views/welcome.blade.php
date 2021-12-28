@@ -16,6 +16,11 @@
                 height: 100vh;
                 margin: 0;
             }
+
+            input {
+                font-size: 12px;
+                font-family: 'Roboto', sans-serif;
+            }
             
             .full-height { height: 100vh; }
 
@@ -59,15 +64,13 @@
             <p>Registro Acceso/Salida</p>
 
             <form action="registro">
-                <div class="form-check">
+                <section id="aligned">
                     <input class="form-check-input" type="radio" name="flexRut" id="flexRut">
                     <label class="form-check-label" for="flexRut">RUT</label>
-                </div>
 
-                <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexPasaporte" id="flexPasaporte">
                     <label class="form-check-label" for="flexPasaporte">Pasaporte</label>
-                </div>
+                </section>
 
                 <div class="mb-3">
                     <input class="form-control form-control-lg" type="text" placeholder="Rut con dígito verificador">
