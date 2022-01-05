@@ -43,13 +43,25 @@
                 color: gray;
             }
 
+            small{
+                text-align: center;
+                color: #636b6f;
+                font-style: italic;
+            }
+
+            .dato_label{
+                text-align: center;
+                font-style: italic;
+                font-weight: bold;
+                color: grey;
+            }
+
             #tel1, #tel2{
                 border-color: green;
             }
 
-            small{
+            .center {
                 text-align: center;
-                color: #636b6f;
             }
 
         </style>
@@ -61,7 +73,7 @@
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <div class="separacion">
                 <h2>Módulo de Trazabilidad</h2>
-                <small> Confirme su número de Teléfono </small>
+                <small> Confirme los datos requeridos (*) </small>
             </div>
 
             <div class="container">
@@ -69,37 +81,15 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="qr" onSubmit="return confirm('Está seguro de los datos ingresados?');">
+                                <form action="qr" onSubmit="return confirm('¿Está seguro de los datos ingresados?');">
                                     <div class="container col-md-4 mb-3">
-                                        <label for="nombre" class="datos form-label">Nombres</label>
-                                        <input type="text" class="form-control" name="nombre" placeholder="Nombres">
+                                        <label for="nombre" class="datos form-label">Rut/pasaporte:</label>
+                                        <label for="num_rut" class="datos form-label dato_label">12345678 - 9/K/P</label>
                                     </div>
 
-                                    <div class="container col-md-4 mb-3">
-                                        <label for="apellido_p" class="datos form-label">Apellido paterno</label>
-                                        <input type="text" class="form-control" name="apellido_p" placeholder="Apellido paterno">
+                                    <div class="container center col-md-4 mb-3">
+                                        <label for="num_rut" class=" dato_label">Juan eduardo pérez martinez</label>
                                     </div>
-
-                                    <div class="container col-md-4 mb-3">
-                                        <label for="apellido_m" class="datos form-label">Apellido materno</label>
-                                        <input type="text" class="form-control" name="apellido_m" placeholder="Apellido materno">
-                                    </div>
-
-                                    <div class="container col-md-4 mb-3">
-                                        <label for="feNa" class="datos form-label">Fecha de nacimiento</label>
-                                        <input type="date" class="form-control" name="feNa">
-                                    </div><br>
-
-                                    <div class="form-check container col-md-4 mb-3">
-                                        <h6>Sexo</h6><br>
-                                        <label for="sexo" class="form-label">
-                                            <input type="radio" class="form-control" name="sexo">Masculino 
-                                        </label>
-
-                                        <label for="sexo" class="form-label">
-                                            <input type="radio" class="form-control" name="sexo">Femenino
-                                        </label>
-                                    </div><br>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef" class="datos form-label">Número fijo/celular (*)</label>
@@ -108,8 +98,7 @@
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <label for="telef2" class="datos form-label">Confirme su número número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569"  minlength="7" maxlength="12" 
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="Confirme 45 / 569"  minlength="7" maxlength="12" 
                                         required pattern="[0-9]+" oninput="checkNum()"/>
                                     </div>
 
@@ -118,10 +107,10 @@
                                     <div class="container col-md-4 mb-3">
                                         <label for="email" class="datos form-label">E-mail</label>
                                         <input type="email" class="form-control" name="email" placeholder="Example@gmail.com">
-                                    </div><br>
+                                    </div>
 
                                     <div class="form-check container col-md-4 mb-3">
-                                        <h6>Esquema de vacuna</h6><br>
+                                        <h6>Esquema de vacuna</h6>
                                         <label for="vacuna" class="form-label">
                                             <input type="radio" class="form-control" name="vacuna">Completo
                                         </label>
@@ -144,6 +133,8 @@
             </div>
         </div>
 
+
+        <script src="{{ asset('js/app.js') }}" type="text/js"></script>
         <script>
             function checkNum() {
                 var tel1 = document.getElementById("tel1").value;
@@ -160,12 +151,7 @@
                     button.disabled = false;
                     error.textContent = '';
                 }
-            } 
-        </script>
-
-        <script src="{{ asset('js/app.js') }}" type="text/js"></script>
-        <script>
-
+            }            
         </script>
     </body>
 </html>

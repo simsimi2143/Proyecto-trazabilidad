@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RutPasaporteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,7 @@ Route::get('/', function () {
     return view('inicio');
 });
 
-Route::post('/', 'App\Http\Controllers\RutPasaporteController@store')->name('inicio');
+Route::post('/', 'App\Http\Controllers\RutPasaporteController@index')->name('inicio');
 
 Route::get('registro', function () {
     return view('registro');
@@ -25,4 +26,8 @@ Route::get('registro', function () {
 
 Route::get('qr', function () {
     return view('qr');
+});
+
+Route::get('confirma', function () {
+    return view('confirm');
 });

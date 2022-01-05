@@ -19,29 +19,25 @@
             }
 
             label {
-                margin-right: 5%;
-                margin-left:5%;
+                margin-right: 3%;
+                margin-left:3%;
             }
 
             #leftbox {
                 float:left;
-                width:100%;
-                margin-left:10%;
             }
 
             #rightbox{
                 float:right;
-                width:20%;
+            }
+
+            .pad_left{
+                padding-left: 1%;
             }
 
             div, h2, p {
-                padding-top: 5%;
-                padding-top: 5%;
-            }
-
-            div{
                 padding-top: 3%;
-                padding-top: 3%;
+                color: #636b6f;
             }
 
             input[type="text"],
@@ -78,24 +74,22 @@
                 top: 18px;
             }
 
+            small{
+                color: #636b6f;
+            }
+
             .content { text-align: center; }
 
             .title { font-size: 84px; }
 
-            /* Chrome, Safari, Edge, Opera */
-            input::-webkit-outer-spin-button,
-            input::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
-            ::placeholder{
-                opacity:10
+            #rut, #pasaporte{
+                width: 150px;
             }
 
-            /* Firefox */
-            input[type=number] {
-                -moz-appearance: textfield;
+            #dv, #p {
+                width: 50px;
             }
+
             
             .m-b-md { margin-bottom: 30px; }
         </style>
@@ -108,46 +102,48 @@
             <h2>Módulo de Trazabilidad</h2>
             <small>Registro Acceso/Salida</small>
 
-            <form action="{{route('inicio')}}" method="post">
+            <form action="{{route('inicio')}}" method="POST" class="form-inline"> 
                 @csrf
-                <div class="container ">
+                <div class="container">
                     <div class="form-check ">
                         
                         <label class="form-check-label" for="flexRut">
                             <input class="form-check-input" type="radio" value="rut" name="flexRut" id="flexRut" checked>RUT
-                        </label>                        
+                        </label>                       
                         <label class="form-check-label" for="flexPasaporte">
                             <input class="form-check-input" type="radio" value="pasaporte" name="flexRut" id="flexPasaporte">Pasaporte
                         </label>
 
                     </div>
 
-                    <div class="form-check rut selectt center">
-                        <div class="input-group row">
-                            <div class="col-6 col-lg-6 row" id="leftbox">
-                               <input class="form-control form-control-lg" minlength="8" maxlength="8" type="text" pattern="[0-9]+" name="rut" placeholder="12345678" >
-                           </div>
-                           <div class="guion col-1">-</div>
-                            <div class="col-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 row" id="rightbox">
-                                <input class="form-control form-control-lg" minlength="1" maxlength="1" type="text" name="dv" pattern="[0-9]+" placeholder="9">
+                    <div class="form-check rut selectt center ">
+                        <div class="input-group row pad_left">
+                            <div id="leftbox">
+                               <input class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° Rut" oninput="checkRut()">
+                            </div>
+                            <div class="guion col-1">-</div>
+                            <div id="rightbox">
+                                <input class="form-control form-control-lg" size=2 minlength="1" maxlength="1" type="text" name="dv" id="dv" placeholder="D" oninput="checkRut()" onkeyup="this.value = this.value.toUpperCase();" >
                             </div>
                         </div>
                     </div>
 
                     <div class="form-check pasaporte selectt hide center">
                         <div class="input-group row">
-                            <div class="col-7 col-lg-7 row" id="leftbox">
-                                <input class="form-control form-control-lg" minlength="10" maxlength="10" type="text" name="pasaporte" placeholder="1234567890">
+                            <div id="leftbox">
+                               <input class="form-control form-control-lg" size=8 minlength="10" maxlength="10" type="text" name="pasaporte" id="pasaporte" placeholder="N° pasaporte">
                             </div>
                             <div class="guion col-1">-</div>
-                            <div class="col-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 row" id="rightbox">
-                                <input class="form-control form-control-lg" type="text" name="p" placeholder="p">
+                            <div id="rightbox">
+                                <input class="form-control form-control-lg" size=2 minlength="1" maxlength="1" type="text" name="p" id="p" placeholder="p">
                             </div>
                         </div>
                     </div>
                     
+                    <small id="error"></small>
+
                     <div>
-                        <button type="submit" class="btn btn-primary">Siguiente</button>
+                        <button type="submit" id="buttonSub" class="btn btn-success">Siguiente</button>
                     </div>
                 </div>
                 
@@ -164,6 +160,56 @@
                     $(targetBox).show();
                 });
             });
+            if(document.getElementById('flexRut').checked){
+                function checkRut() {
+                    var valor = document.getElementById("rut").value;
+                    var dv = document.getElementById("dv").value;
+                    var button = document.getElementById("buttonSub");
+                    var error = document.getElementById("error");
+
+                    // Calcular Dígito Verificador
+                    suma = 0;
+                    multiplo = 2;
+                    
+                    // Para cada dígito del Cuerpo
+                    for(i=1;i<=valor.length;i++) {
+                    
+                        // Obtener su Producto con el Múltiplo Correspondiente
+                        index = multiplo * valor.charAt(valor.length - i);
+                        
+                        // Sumar al Contador General
+                        suma = suma + index;
+                        
+                        // Consolidar Múltiplo dentro del rango [2,7]
+                        if(multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+                
+                    }
+                    
+                    // Calcular Dígito Verificador en base al Módulo 11
+                    dvEsperado = 11 - (suma % 11);
+                    
+                    // Casos Especiales (0 y K)
+                    dv = (dv == 'K')?10:dv;
+                    dv = (dv == 'k')?10:dv;
+                    dv = (dv == 0)?11:dv;
+                    
+                    // Validar que el Cuerpo coincide con su Dígito Verificador
+                    if((dvEsperado != dv) || (valor.length <7 )) { 
+                        // rut.setCustomValidity("RUT Inválido");
+                        error.textContent = "Su numero de rut con el digito verificador no coinciden";
+                        error.style.color = "red";
+                        button.disabled = true;
+                    }
+
+                    else{
+                        button.disabled = false;
+                        error.textContent = ""
+                    }
+                    
+                    // Si todo sale bien, eliminar errores (decretar que es válido)
+                    
+                }
+            }
         </script>
 
 

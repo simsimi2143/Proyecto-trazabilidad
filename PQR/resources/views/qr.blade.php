@@ -6,6 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Trazabilidad</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="sweetalert2.all.min.js"></script>
+        <script src="sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="sweetalert2.min.css">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         
         <style>
@@ -18,6 +22,10 @@
                 margin: 0;
             }
             
+            #principal{
+                padding-top: 3%;
+            }
+
             .full-height { height: 100vh; }
 
             .flex-center {
@@ -33,6 +41,9 @@
                 right: 10px;
                 top: 18px;
             }
+            .separacion{
+                padding: 3%;
+            }
 
             .content { text-align: center; }
 
@@ -43,17 +54,17 @@
     </head>
     
     <body>
-        <div class="content">
-            <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="300" height="100">
-            <h2>Módulo de Trazabilidad</h2><br>
-            <h2>Bienvenido/a </h2>   
+        <div id="principal" class="content">
+            <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
+            <div class="separacion">
+                <h2>Módulo de Trazabilidad</h2>
+                <small>Bienvenido/a  Juan Carlos Pérez Pérez</small>
 
-            <div class="contenedor">
                 <div class="abs-center">
-                    <div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
-                    <video id="previsualizacion" class="p-1 border" style="width:300px; height:200px;"></video>
+                    <br><div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
+                    <video id="previsualizacion" style="width:400px; height:300px;"></video>
                 </div>
-            </div>
+            </div>   
             
             <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
             
@@ -64,46 +75,41 @@
                     mirror: false 
                 });
         
-                scanner.addListener('scan',function(content){
-                    alert(content);
-                    //window.location.href=content;
-                });
-        
-                Instascan.Camera.getCameras().then(function (cameras){
-                    if(cameras.length>=0){
+                Instascan.Camera.getCameras().then(function(cameras) {
+                    if(cameras.length > 0){
                         scanner.start(cameras[0]);
-                        $('[name="options"]').on('change',function(){
-                            if($(this).val()==1){
-                                if(cameras[0]!=""){
-                                    scanner.start(cameras[0]);
-                                }else{
-                                    alert('No Front camera found!');
-                                }
-                            }else if($(this).val()==2){
-                                if(cameras[1]!=""){
-                                    scanner.start(cameras[1]);
-                                }else{
-                                    alert('No Back camera found!');
-                                }
-                            }
-                        });
                     }else{
-                        console.error('No cameras found.');
-                        alert('No cameras found.');
+                        console.error('No se han encontrado cámaras');
+                        alert('No se encontraron cámaras');
                     }
                 }).catch(function(e){
                     console.error(e);
-                    alert(e);
+                    alert("Error:" + e);
+                });
+
+                scanner.addListener('scan', function(respuesta) {
+                    console.log("Contenido:" + respuesta);
                 });
             </script>
             
-            <div class="container col-md-4" style="text-align: center;">
-                <input class="form-control text-center" type="text" placeholder="O escriba el código QR">
-            </div><br>
+            <input class="container form-control text-center col-md-4" type="text" placeholder="O escriba el código QR"><br>
 
-            <a href="/" type="submit" class="btn btn-success">Entrada</a>
-            <a href="/"  type="submit" class="btn btn-danger">Salida</a>
+            <a href="#" type="submit" onclick="confirmar()" class="a btn btn-success">Entrada</a>
+            <a href="#" type="submit" onclick="confirmar()" class="a btn btn-danger">Salida</a>
         </div>
+
+        <script>
+            function confirmar(){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Su registro se ha completado con éxito!!',
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(function(){
+                    window.location.href = "/";
+                })
+            }
+        </script>
     
         <script src="{{ asset('js/app.js') }}" type="text/js"></script>
 
