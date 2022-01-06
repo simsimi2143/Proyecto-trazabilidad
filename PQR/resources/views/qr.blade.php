@@ -62,7 +62,7 @@
 
                 <div class="abs-center">
                     <br><div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
-                    <video id="previsualizacion" style="width:400px; height:300px;"></video>
+                    <video id="previsualizacion" style="width:900px; height:300px;"></video>
                 </div>
             </div>   
             

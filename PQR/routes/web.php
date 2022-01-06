@@ -20,14 +20,10 @@ Route::get('/', function () {
 
 Route::post('/', 'App\Http\Controllers\RutPasaporteController@index')->name('inicio');
 
-Route::get('registro', function () {
-    return view('registro');
-});
+Route::post('registro', 'App\Http\Controllers\RegistroController@index')->name('registro');
 
-Route::get('qr', function () {
+Route::post('confirma', 'App\Http\Controllers\ConfirmaController@index')->name('confirma');
+
+Route::post('qr', function () {
     return view('qr');
-});
-
-Route::get('confirma', function () {
-    return view('confirm');
 });

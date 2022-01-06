@@ -87,7 +87,7 @@
             }
 
             #dv, #p {
-                width: 50px;
+                width: 55px;
             }
 
             
@@ -100,7 +100,7 @@
         <div class="content">
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <h2>Módulo de Trazabilidad</h2>
-            <small>Registro Acceso/Salida</small>
+            <small>Registro Entrada/Salida</small>
 
             <form action="{{route('inicio')}}" method="POST" class="form-inline"> 
                 @csrf
@@ -119,11 +119,11 @@
                     <div class="form-check rut selectt center ">
                         <div class="input-group row pad_left">
                             <div id="leftbox">
-                               <input class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° Rut" oninput="checkRut()">
+                               <input value="" class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° Rut" oninput="checkRut()">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">
-                                <input class="form-control form-control-lg" size=2 minlength="1" maxlength="1" type="text" name="dv" id="dv" placeholder="D" oninput="checkRut()" onkeyup="this.value = this.value.toUpperCase();" >
+                                <input class="form-control form-control-lg" size=2 minlength="1" maxlength="1" type="text" name="dv" id="dv" placeholder="dv" oninput="checkRut()" onkeyup="this.value = this.value.toUpperCase();" >
                             </div>
                         </div>
                     </div>
@@ -196,7 +196,7 @@
                     // Validar que el Cuerpo coincide con su Dígito Verificador
                     if((dvEsperado != dv) || (valor.length <7 )) { 
                         // rut.setCustomValidity("RUT Inválido");
-                        error.textContent = "Su numero de rut con el digito verificador no coinciden";
+                        error.textContent = "Su número de rut con el dígito verificador no coinciden";
                         error.style.color = "red";
                         button.disabled = true;
                     }
