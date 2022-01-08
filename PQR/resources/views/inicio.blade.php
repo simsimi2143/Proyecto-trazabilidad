@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Trazabilidad</title>
+        <title>Trazabilidad UCT</title>
         <script src= "https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
@@ -29,10 +29,6 @@
 
             #rightbox{
                 float:right;
-            }
-
-            .pad_left{
-                padding-left: 1%;
             }
 
             div, h2, p {
@@ -90,6 +86,25 @@
                 width: 55px;
             }
 
+            #error{
+                text-align: center;
+            }
+
+            .pad_left{
+                padding-left: 1%;
+            }
+
+            .pad_top{
+                padding-top: 2em;
+            }
+
+            .dato_label{
+                text-align: center;
+            }
+
+            #msg_pas{
+                margin-bottom: 15px;
+            }
             
             .m-b-md { margin-bottom: 30px; }
         </style>
@@ -108,18 +123,17 @@
                     <div class="form-check ">
                         
                         <label class="form-check-label" for="flexRut">
-                            <input class="form-check-input" type="radio" value="rut" name="flexRut" id="flexRut" checked>RUT
+                            <input class="form-check-input" type="radio" value="rut" name="flexRut" id="flexRut" onclick="msg_rut()" checked>RUT
                         </label>                       
                         <label class="form-check-label" for="flexPasaporte">
-                            <input class="form-check-input" type="radio" value="pasaporte" name="flexRut" id="flexPasaporte">Pasaporte
+                            <input class="form-check-input" type="radio" value="pasaporte" name="flexRut" id="flexPasaporte" onclick="msg_pass()" >Pasaporte
                         </label>
-
                     </div>
 
                     <div class="form-check rut selectt center ">
-                        <div class="input-group row pad_left">
+                        <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
-                               <input value="" class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° Rut" oninput="checkRut()">
+                               <input class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° Rut" oninput="checkRut()">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">
@@ -129,20 +143,21 @@
                     </div>
 
                     <div class="form-check pasaporte selectt hide center">
-                        <div class="input-group row">
+                        <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
-                               <input class="form-control form-control-lg" size=8 minlength="10" maxlength="10" type="text" name="pasaporte" id="pasaporte" placeholder="N° pasaporte">
+                               <input class="form-control form-control-lg" size=8 minlength="7" maxlength="15" type="text" pattern="[0-9]+" name="pasaporte" pattern="[A-Za-z0-9]+" id="pasaporte" placeholder="N° pasaporte">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">
-                                <input class="form-control form-control-lg" size=2 minlength="1" maxlength="1" type="text" name="p" id="p" placeholder="p">
+                                <input class="form-control form-control-lg" size=2 type="text" name="p" id="p" placeholder="p" disabled>
                             </div>
                         </div>
-                    </div>
+                    </div><br><br>
                     
-                    <small id="error"></small>
+                    <label for="num_rut" id="error" class="dato_label"></label>
+                    <label for="num_rut" id="error_pass" class="dato_label"></label>
 
-                    <div>
+                    <div class="form-check">
                         <button type="submit" id="buttonSub" class="btn btn-success">Siguiente</button>
                     </div>
                 </div>
@@ -160,12 +175,33 @@
                     $(targetBox).show();
                 });
             });
+
             if(document.getElementById('flexRut').checked){
+                function msg_pass(){
+                    document.getElementById("rut").value = "";
+                    var button = document.getElementById("buttonSub");
+                    button.disabled = false;
+                    var error = document.getElementById("error");
+                    error.textContent = "Por favor, ingrese solo los números de su pasaporte";
+                    error.style.color = "red";
+                }
+            }
+            
+            if(document.getElementById('flexRut').checked){
+                function msg_rut(){
+                    document.getElementById("pasaporte").value = "";
+                    var error = document.getElementById("error");
+                    error.textContent = "";
+                    var button = document.getElementById("buttonSub");
+                    button.disabled = false;
+                }
                 function checkRut() {
                     var valor = document.getElementById("rut").value;
                     var dv = document.getElementById("dv").value;
                     var button = document.getElementById("buttonSub");
                     var error = document.getElementById("error");
+
+                    error.textContent = ""
 
                     // Calcular Dígito Verificador
                     suma = 0;

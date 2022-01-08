@@ -18,12 +18,22 @@ Route::get('/', function () {
     return view('inicio');
 });
 
+Route::get('confirma', function () {
+    return view('inicio');
+});
+
+Route::get('registro', function () {
+    return view('inicio');
+});
+
+Route::get('qr', function () {
+    return view('inicio');
+});
+
 Route::post('/', 'App\Http\Controllers\RutPasaporteController@index')->name('inicio');
 
 Route::post('registro', 'App\Http\Controllers\RegistroController@index')->name('registro');
 
 Route::post('confirma', 'App\Http\Controllers\ConfirmaController@index')->name('confirma');
 
-Route::post('qr', function () {
-    return view('qr');
-});
+Route::post('qr', 'App\Http\Controllers\QrController@index')->name('qr');

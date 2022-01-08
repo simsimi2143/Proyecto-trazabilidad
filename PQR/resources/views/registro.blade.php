@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Traza</title>
+        <title>Trazabilidad UCT</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         
@@ -73,37 +73,37 @@
                                     @csrf
                                     <div class="container col-md-4 mb-3">
                                         <label for="nombre" class="datos form-label">Nombres</label>
-                                        <input type="text" class="form-control" name="nombre" placeholder="Nombres">
+                                        <input type="text" class="form-control" name="visi_nombres" placeholder="Nombres">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_p" class="datos form-label">Apellido paterno</label>
-                                        <input type="text" class="form-control" name="apellido_p" placeholder="Apellido paterno">
+                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_m" class="datos form-label">Apellido materno</label>
-                                        <input type="text" class="form-control" name="apellido_m" placeholder="Apellido materno">
+                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="feNa" class="datos form-label">Fecha de nacimiento</label>
-                                        <input type="date" class="form-control" name="feNa">
+                                        <input type="date" class="form-control" name="visi_fecha_nac">
                                     </div><br>
 
                                     <div class="form-check container col-md-4 mb-3">
                                         <label for="sexo" class="form-label">
-                                            <input type="radio" class="form-control" name="sexo">Masculino 
+                                            <input id="sexo_codigo" value=1 type="radio" class="form-control" name="sexo_codigo" checked>Masculino 
                                         </label>
 
                                         <label for="sexo" class="form-label">
-                                            <input type="radio" class="form-control" name="sexo">Femenino
+                                            <input id="sexo_codigo" value=2 type="radio" class="form-control" name="sexo_codigo">Femenino
                                         </label>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef" class="datos form-label">Número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="45 / 569"  minlength="7" maxlength="12"  
+                                        <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="45 / 569"  minlength="7" maxlength="12"  
                                         required pattern="[0-9]+" oninput="checkNum()"/>
                                     </div>
 
@@ -117,21 +117,21 @@
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="email" class="datos form-label">E-mail</label>
-                                        <input type="email" class="form-control" name="email" placeholder="Example@gmail.com">
+                                        <input type="email" class="form-control" name="visi_email" placeholder="Example@gmail.com">
                                     </div><br>
 
                                     <div class="form-check container col-md-4 mb-3">
                                         <h6>Esquema de vacuna</h6><br>
                                         <label for="vacuna" class="form-label">
-                                            <input type="radio" class="form-control" name="vacuna">Completo
+                                            <input type="radio" value="C" class="form-control" name="visi_esquema_completo">Completo
                                         </label>
 
                                         <label for="vacuna" class="form-label">
-                                            <input type="radio" class="form-control" name="vacuna">Incompleto
+                                            <input type="radio" value="I" class="form-control" name="visi_esquema_completo">Incompleto
                                         </label>
 
                                         <label for="vacuna" class="form-label">
-                                            <input type="radio" class="form-control" name="vacuna">No realizado
+                                            <input type="radio" value="S" class="form-control" name="visi_esquema_completo" checked>No realizado
                                         </label>
                                     </div>
                                     

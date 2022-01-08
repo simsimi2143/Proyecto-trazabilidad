@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Traza</title>
+        <title>Trazabilidad UCT</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         
@@ -49,10 +49,6 @@
                 font-style: italic;
             }
 
-            #tel1, #tel2{
-                border-color: green;
-            }
-
             .dato_label{
                 text-align: center;
                 font-style: italic;
@@ -64,6 +60,14 @@
                 text-align: center;
             }
 
+            .hide{
+                display: none;
+            }
+
+            #tel1, #tel2{
+                border-color: green;
+            }
+
         </style>
     </head>
 
@@ -73,7 +77,7 @@
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <div class="separacion">
                 <h2>Módulo de Trazabilidad</h2>
-                <small> Confirme los datos requeridos (*) </small>
+                <small> Confirme los datos requeridos</small>
             </div>
             
             <div class="container">
@@ -81,25 +85,21 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{route('confirma')}}" method="POST" onSubmit="return confirm('¿Está seguro de los datos ingresados?');">
+                                <form action="{{route('confirma')}}" method="post" onSubmit="return confirm('¿Está seguro de los datos ingresados?');">
                                 @csrf
                                     <div class="container col-md-4 mb-3">
-                                        <label for="nombre" class="datos form-label">Rut/pasaporte:</label>
-                                        <label for="num_rut" class="datos form-label dato_label">{{ $n_rut }}</label>
-                                    </div>
-
-                                    <div class="container center col-md-4 mb-3">
+                                        <label for="num_rut" class="dato_label">{{ $n_rut }}</label><br>
                                         <label for="num_rut" class="dato_label">{{ $n_com }}</label>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <label for="telef" class="datos form-label">Confirme sus datos personales</label>
-                                        <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="45 / 569"  minlength="7" maxlength="12"  
+                                        <label for="telef" class="datos form-label">Confirme sus datos</label>
+                                        <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="Ingrese número telefónico"  minlength="7" maxlength="12"  
                                         required pattern="[0-9]+" oninput="checkNum()"/>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569"  minlength="7" maxlength="12" 
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="Re ingrese su número"  minlength="7" maxlength="12" 
                                         required pattern="[0-9]+" oninput="checkNum()"/>
                                     </div>
 
@@ -109,22 +109,23 @@
                                         <input type="email" class="form-control" name="email" placeholder="Correo electrónico">
                                     </div>
 
-                                    <div class="container col-md-4 mb-3">
-                                        <input type="text" class="form-control" name="oficina" placeholder="Oficina">
+                                    <div class="container col-md-4 mb-3 oficina">
+                                        <input type="text" class="form-control" name="oficina" id="oficina" placeholder="Oficina">
+                                        <input value="{{ $carg }}" type="text" class="form-control hide" name="oficina_cargo" id="oficina_cargo" placeholder="Oficina" disabled>
                                     </div>
 
                                     <div class="form-check container col-md-4 mb-3">
-                                        <h6>Esquema de vacuna</h6>
+                                        <h6>Esquema de vacuna</h6><br>
                                         <label for="vacuna" class="form-label">
-                                            <input type="radio" class="form-control" name="vacuna">Completo
+                                            <input type="radio" value="C" class="form-control" name="visi_esquema_completo">Completo
                                         </label>
 
                                         <label for="vacuna" class="form-label">
-                                            <input type="radio" class="form-control" name="vacuna">Incompleto
+                                            <input type="radio" value="I" class="form-control" name="visi_esquema_completo">Incompleto
                                         </label>
 
                                         <label for="vacuna" class="form-label">
-                                            <input type="radio" class="form-control" name="vacuna">No Realizado
+                                            <input type="radio" value="S" class="form-control" name="visi_esquema_completo" checked>No realizado
                                         </label>
                                     </div>
                                     
@@ -139,7 +140,15 @@
 
 
         <script src="{{ asset('js/app.js') }}" type="text/js"></script>
-        <script>
+        <script type="text/javascript">
+            var ofi = document.getElementById("oficina_cargo").value;
+            if (ofi == 0){
+                document.getElementById("oficina").style.display= "none";
+            }
+            else{
+                document.getElementById("oficina").style.display= "block";
+            }
+
             function checkNum() {
                 var tel1 = document.getElementById("tel1").value;
                 var tel2 = document.getElementById("tel2").value;
