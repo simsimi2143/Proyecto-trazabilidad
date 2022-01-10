@@ -37,10 +37,12 @@ class RegistroController extends Controller {
 
 
             // Condicional para cuando se selecciona un radio se defina si la persona es femenina o masculino
-            if($sexo_codigo == 1){
+            if($sexo_codigo == 1) {
                 $sexo_nombre = "Masculino";
-            } else {
+            } else if($sexo_codigo == 2) {
                 $sexo_nombre = "Femenino";
+            } else {
+                $sexo_nombre = "Otro";
             }
 
             $query_uct = DB::select("SET NOCOUNT ON; SET DATEFORMAT DMY; exec TRAZA.dbo.ingresa_visita @visi_rut_nro = ?, @visi_dv = ?, @visi_paterno = ?, 

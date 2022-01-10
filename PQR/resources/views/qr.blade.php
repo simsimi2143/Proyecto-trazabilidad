@@ -28,6 +28,7 @@
             
             #principal{
                 padding-top: 3%;
+                 
             }
 
             .full-height { height: 100vh; }

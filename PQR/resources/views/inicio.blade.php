@@ -120,16 +120,16 @@
         <div class="content">
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <h2>Módulo de Trazabilidad</h2>
-            <small>Registro Entrada/Salida</small>
+            <small>Registro Entrada/Salida</small><br><br>
+            <small>Tipo de documento</small>
 
             <form action="{{route('inicio')}}" method="POST" class="form-inline"> 
                 @csrf
                 <div class="container">
                     <div class="form-check ">
-                        
                         <label class="form-check-label" for="flexRut">
-                            <input class="form-check-input" type="radio" value="rut" name="flexRut" id="flexRut" onclick="msg_rut()" checked>RUT
-                        </label>                       
+                            <input class="form-check-input" type="radio" value="rut" name="flexRut" id="flexRut" onclick="msg_rut()" checked>RUN
+                        </label>                     
                         <label class="form-check-label" for="flexPasaporte">
                             <input class="form-check-input" type="radio" value="pasaporte" name="flexRut" id="flexPasaporte" onclick="msg_pass()" >Pasaporte
                         </label>
@@ -138,7 +138,7 @@
                     <div class="form-check rut selectt center ">
                         <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
-                               <input class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° Rut" oninput="checkRut()">
+                               <input class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° run" oninput="checkRut()">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">

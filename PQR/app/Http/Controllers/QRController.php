@@ -5,11 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Database\QueryException;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use hisorange\BrowserDetect\Parser as Browser;
 
 class QrController extends Controller {
     public function index() {
@@ -25,16 +20,26 @@ class QrController extends Controller {
             $n_dv  = session('dv_nro');   
             $t_traza = $_POST['t_traza'];
             $code_ambi = $_POST['code_ambi'];
+            $campo = 'ambi_codigo';
             
-            // return $n_rut.'-'.$n_dv.'//'.$t_traza.'//'.$previa;
-            $query_uct = DB::select("SET NOCOUNT ON; exec TRAZA.dbo.ingresa_trazabilidad @pers_rut_nro = ?, @pers_dv = ?, @ambi_codigo = ?, @traz_tipo = ?", [$n_rut,$n_dv,$code_ambi,$t_traza]);
+            // return $n_rut.'-'.$n_dv.'//'.$t_traza.'//'.$code_ambi;
+            $query_ambi = DB::select("SET NOCOUNT ON; exec TRAZA.dbo.buscar_ambiente @campo = ?, @valor = ?", [$campo,$code_ambi]);
 
-            if($query_uct == []){
-                return view('qr');
+            if($query_ambi == []){
+                $nom_com = session('nom_com');
+                return view('qr',[
+                    "n_com" => $nom_com]);
             }
             else{
-                return view('inicio');
+                $query_uct = DB::select("SET NOCOUNT ON; exec TRAZA.dbo.ingresa_trazabilidad @pers_rut_nro = ?, @pers_dv = ?, @ambi_codigo = ?, @traz_tipo = ?", [$n_rut,$n_dv,$code_ambi,$t_traza]);
+                if($query_uct==[]){
+                    return view('qr');
+                }
+                else{
+                    return view('inicio');
+                }               
             }
         }
     }
+
 }

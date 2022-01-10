@@ -98,6 +98,10 @@
                                         <label for="sexo" class="form-label">
                                             <input id="sexo_codigo" value=2 type="radio" class="form-control" name="sexo_codigo">Femenino
                                         </label>
+
+                                        <label for="sexo" class="form-label">
+                                            <input id="sexo_codigo" value=3 type="radio" class="form-control" name="sexo_codigo">Otro
+                                        </label>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
@@ -120,7 +124,7 @@
                                     </div><br>
 
                                     <div class="form-check container col-md-4 mb-3">
-                                        <h6>Esquema de vacuna</h6><br>
+                                        <h6>Esquema de vacunación</h6><br>
                                         <label for="vacuna" class="form-label">
                                             <input type="radio" value="C" class="form-control" name="visi_esquema_completo">Completo
                                         </label>

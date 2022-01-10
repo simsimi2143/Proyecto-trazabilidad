@@ -114,7 +114,7 @@
                                     </div>
 
                                     <div class="form-check container col-md-4 mb-3">
-                                        <h6>Esquema de vacuna</h6><br>
+                                        <h6>Esquema de vacunación</h6><br>
                                         <label for="vacuna" class="form-label">
                                             <input type="radio" value="C" class="form-control" name="visi_esquema_completo">Completo
                                         </label>

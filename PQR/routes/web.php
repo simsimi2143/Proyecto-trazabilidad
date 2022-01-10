@@ -3,6 +3,7 @@
 use App\Http\Controllers\RutPasaporteController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
