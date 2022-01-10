@@ -28,7 +28,8 @@
             
             #principal{
                 padding-top: 3%;
-                 
+                display: block;
+                text-align: center;
             }
 
             .full-height { height: 100vh; }
@@ -63,8 +64,6 @@
                 font-weight: bold;
                 font-size: 18pt;
             }
-
-            .content { text-align: center; }
 
             .title { font-size: 84px; }
             

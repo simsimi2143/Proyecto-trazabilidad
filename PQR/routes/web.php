@@ -37,4 +37,4 @@ Route::post('registro', 'App\Http\Controllers\RegistroController@index')->name('
 
 Route::post('confirma', 'App\Http\Controllers\ConfirmaController@index')->name('confirma');
 
-Route::post('qr', 'App\Http\Controllers\QrController@index')->name('qr');
+Route::post('qr', 'App\Http\Controllers\EscanerController@index')->name('qr');

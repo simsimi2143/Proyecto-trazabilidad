@@ -74,7 +74,10 @@
                 color: #636b6f;
             }
 
-            .content { text-align: center; }
+            .content { 
+                text-align: center; 
+                display: block;
+            }
 
             .title { font-size: 84px; }
 

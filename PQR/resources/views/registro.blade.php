@@ -24,8 +24,6 @@
                 color: gray;
             }
 
-            .content { text-align: center; }
-
             .separacion{
                 padding: 3%;
             }
@@ -37,6 +35,8 @@
 
             #principal{
                 padding-top: 3%;
+                text-align: center;
+                display: block;
             }
 
             h6{
