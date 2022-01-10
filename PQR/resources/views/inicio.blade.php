@@ -82,6 +82,11 @@
                 width: 150px;
             }
 
+            small{
+                text-align: center;
+                color: #636b6f;
+            }
+
             #dv, #p {
                 width: 55px;
             }

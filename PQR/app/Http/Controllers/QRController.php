@@ -11,10 +11,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use hisorange\BrowserDetect\Parser as Browser;
 
-class QrController extends Controller
-{
-    public function index()
-    {
+class QrController extends Controller {
+    public function index() {
         //Declaracion de varaibles a partir de la informacion de la sesion
         // $n_rut = session('rut_nro');
         // $n_dv  = session('dv_nro'); 

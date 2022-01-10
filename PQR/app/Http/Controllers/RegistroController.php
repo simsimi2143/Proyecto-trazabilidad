@@ -33,7 +33,7 @@ class RegistroController extends Controller {
             $visi_extra1 = '';
             $visi_extra2 = '';
             $visi_extra3 = '';
-            $usuario_mod = '';
+            $usuario_mod = $n_rut;
 
 
             // Condicional para cuando se selecciona un radio se defina si la persona es femenina o masculino

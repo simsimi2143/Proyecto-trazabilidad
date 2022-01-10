@@ -7,9 +7,6 @@
         <title>Trazabilidad UCT</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="sweetalert2.all.min.js"></script>
-        <script src="sweetalert2.min.js"></script>
-        <link rel="stylesheet" href="sweetalert2.min.css">
         <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
@@ -21,7 +18,12 @@
                 font-family: 'Roboto', sans-serif;
                 font-weight: 200;
                 height: 100vh;
-                margin: 0;
+                margin: 0 auto;
+            }
+
+            small{
+                text-align: center;
+                color: #636b6f;
             }
             
             #principal{
@@ -49,6 +51,16 @@
 
             #previsualizacion{
                 margin: 0 auto;
+                width: 320px;
+                height: 200px;
+            }
+
+            #code_ambi{
+                height: 50px;
+                width: 360px;
+                margin: 0 auto;
+                font-weight: bold;
+                font-size: 18pt;
             }
 
             .content { text-align: center; }
@@ -59,8 +71,10 @@
 
             #video{
                 margin: 0 auto;
-                width: 0 auto;
-                height: 0 auto;
+                width: 320px;
+                height: 200px;
+                position: relative;
+                /* clip-path: inset(14% 9% 21% 10%); */
             }
         </style>
     </head>
@@ -72,16 +86,15 @@
                 <h2>Módulo de Trazabilidad</h2>
                 <small>Bienvenido/a {{$n_com}}</small>
 
-                <div class="abs-center">
-                    <div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
+                <div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
 
-                    <div id="video">
-                        <video name="previsualizacion" id="previsualizacion" style="width:300px; height:200px;"></video>
-                    </div>
+                <div id="video">
+                    <video name="previsualizacion" id="previsualizacion" autoplay></video>
                 </div>
             </div> 
 
             
+            {{-- script de implementación de la cámara scanner QR --}}
             <script type="text/javascript">
                 var sonido = new Audio('js/sonidito.mp3');
 
@@ -90,7 +103,7 @@
                     scanPeriod: 5, 
                     mirror: false 
                 });
-        
+
                 Instascan.Camera.getCameras().then(function(cameras) {
                     if(cameras.length > 0){
                         scanner.start(cameras[0]);
@@ -106,21 +119,25 @@
                 scanner.addListener('scan', function(respuesta) {
                     sonido.play();
                     //alert("Contenido:" + respuesta);
-                    document.getElementById('code_ambi').value=respuesta;          
+                    document.getElementById('code_ambi').value=respuesta; //code_ambi es el input para escribir el QR
                 });
             </script>
+
             
             <form action="{{route('qr')}}" method="post">
                 @csrf
                 <input class="container form-control text-center col-md-4" type="text" autofocus placeholder="O escriba el código QR" name="code_ambi" id="code_ambi" required><br>
 
                 <div>
-                    <a href="#" onclick="confirmar()" name="t_traza" class="btn btn-success" value="ENTRADA">Entrada</a>
-                    <a href="#" onclick="confirmar()" name="t_traza" class="btn btn-danger" value="SALIDA">Salida</a>
+                    <button onclick="confirmar()" name="t_traza" class="btn btn-success" value="ENTRADA">Entrada</button>
+                    <button onclick="confirmar()" name="t_traza" class="btn btn-danger" value="SALIDA">Salida</button>
                 </div><br>
             </form>
         </div>
 
+
+        {{-- función que genera las ventanas de confirmacion y rechazo al seleccionar
+        los botones de entrada y salida usando sweetalert --}}
         <script>
             function confirmar(){
                 var code_ambi = document.getElementById("code_ambi").value;
@@ -138,10 +155,8 @@
                         title: 'Su registro se ha completado con éxito!!',
                         showConfirmButton: false,
                         timer: 2000,
-                    }).then(function(){
-                        window.location.href = "/";
-                    })
-                }              
+                    })    
+                }         
             }
         </script>
     

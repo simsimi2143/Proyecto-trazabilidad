@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Trazabilidad UCT</title>
+        <title>Traza</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         
@@ -51,7 +51,6 @@
                 text-align: center;
                 color: #636b6f;
             }
-
         </style>
     </head>
 

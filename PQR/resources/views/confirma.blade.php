@@ -46,7 +46,6 @@
             small{
                 text-align: center;
                 color: #636b6f;
-                font-style: italic;
             }
 
             .dato_label{
@@ -93,13 +92,13 @@
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <label for="telef" class="datos form-label">Confirme sus datos</label>
+                                        <label for="telef" class="datos form-label">Confirme sus datos (*)</label>
                                         <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="Ingrese número telefónico"  minlength="7" maxlength="12"  
                                         required pattern="[0-9]+" oninput="checkNum()"/>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="Re ingrese su número"  minlength="7" maxlength="12" 
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="Re: ingrese su número"  minlength="7" maxlength="12" 
                                         required pattern="[0-9]+" oninput="checkNum()"/>
                                     </div>
 
