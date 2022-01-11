@@ -72,17 +72,17 @@
                                     @csrf
                                     <div class="container col-md-4 mb-3">
                                         <label for="nombre" class="datos form-label">Nombres</label>
-                                        <input type="text" class="form-control" name="visi_nombres" placeholder="Nombres">
+                                        <input type="text" class="form-control" name="visi_nombres" placeholder="Nombres" pattern="[A-Za-z]">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_p" class="datos form-label">Apellido paterno</label>
-                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno">
+                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[A-Za-z]">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_m" class="datos form-label">Apellido materno</label>
-                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno">
+                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[A-Za-z]">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
@@ -106,13 +106,13 @@
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef" class="datos form-label">Número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="45 / 569"  minlength="7" maxlength="12"  
+                                        <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="45 / 569"  minlength="7" maxlength="11"  
                                         required pattern="[0-9]+" oninput="checkNum()"/>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef2" class="datos form-label">Confirme su número número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569"  minlength="7" maxlength="12" 
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569"  minlength="7" maxlength="11" 
                                         required pattern="[0-9]+" oninput="checkNum()"/>
                                     </div>
 
@@ -120,7 +120,7 @@
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="email" class="datos form-label">E-mail</label>
-                                        <input type="email" class="form-control" name="visi_email" placeholder="Example@gmail.com">
+                                        <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="visi_email" required placeholder="Example@gmail.com">
                                     </div><br>
 
                                     <div class="form-check container col-md-4 mb-3">

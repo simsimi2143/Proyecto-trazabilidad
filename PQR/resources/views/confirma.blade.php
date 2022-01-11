@@ -105,7 +105,7 @@
                                     <small id="error"></small>
 
                                     <div class="container col-md-4 mb-3">
-                                        <input type="email" class="form-control" name="email" placeholder="Correo electrónico">
+                                        <input type="email" class="form-control" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Correo electrónico">
                                     </div>
 
                                     <div class="container col-md-4 mb-3 oficina">

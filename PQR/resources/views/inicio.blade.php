@@ -166,7 +166,7 @@
                     <label for="num_rut" id="error_pass" class="dato_label"></label>
 
                     <div class="form-check">
-                        <button type="submit" id="buttonSub" class="btn btn-success">Siguiente</button>
+                        <button type="submit" id="buttonSub" class="btn btn-success" disabled>Siguiente</button>
                     </div>
                 </div>
                 
