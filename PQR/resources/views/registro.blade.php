@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Traza</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
+        
+        <!--Llamamos a nuesta carpeta public y su contenido bootstrap mediante esta sentencia-->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         
         <!-- Los iconos tipo Solid de Fontawesome-->
@@ -68,21 +70,26 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
+                                <!-- El formulario funciona por el método post para el envío de datos los cuales deben pasar por el controller
+                                y los onSubmit son alertas que indican si los datos del usuario son correctos y le pregunta para continuar-->
                                 <form action="{{route('registro')}}" method="POST" onSubmit="return confirm('Está seguro de los datos ingresados?');">
+                                    <!-- Utilizamos este término para validar el envío del método post mediante un token -->
                                     @csrf
                                     <div class="container col-md-4 mb-3">
                                         <label for="nombre" class="datos form-label">Nombres</label>
-                                        <input type="text" class="form-control" name="visi_nombres" placeholder="Nombres" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
+                                        <input type="text" class="form-control" name="visi_nombres" placeholder="Nombres" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
                                     </div>
 
+                                    <!--Mediante un pattern validamos el ingreso de datos al formulario para que estos cunplan con los requisitos 
+                                     que están en la base de datos-->
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_p" class="datos form-label">Apellido paterno</label>
-                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
+                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_m" class="datos form-label">Apellido materno</label>
-                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
+                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
@@ -90,6 +97,8 @@
                                         <input type="date" class="form-control" name="visi_fecha_nac">
                                     </div><br>
 
+                                    <!--Asignamos un valor numerico a cada tipo radio para que de esta forma podamos trabajar en la base de 
+                                     datos con estos registros-->
                                     <div class="form-check container col-md-4 mb-3">
                                         <label for="sexo" class="form-label">
                                             <input id="sexo_codigo" value=1 type="radio" class="form-control" name="sexo_codigo">Masculino 
@@ -108,6 +117,8 @@
                                         </label>
                                     </div>
 
+                                    <!--Los datos del número celular y/o telefónico son estrictamente requeridos por lo tanto se aplicó la etiqueta required a
+                                    esta seccion del formulario-->
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef" class="datos form-label">Número fijo/celular (*)</label>
                                         <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="45 / 569"  minlength="7" maxlength="11"  
@@ -156,17 +167,21 @@
         </div>
 
         <script>
+            // Mediante esta función nos aseguramos que los números telefónicos ingresados en ambos campos asigandos a esta tarea
+            // sean iguales para así validar este dato 
             function checkNum() {
                 var tel1 = document.getElementById("tel1").value;
                 var tel2 = document.getElementById("tel2").value;
                 var button = document.getElementById("buttonSub");
                 var error = document.getElementById("error");
                 
+                // En nuestra condicional nos aseguramos que estos datos coincidan
                 if (tel1 != tel2){ 
                     button.disabled = true;
                     error.textContent = "Los números no coinciden";
                     error.style.color = "red";
                 }
+                // Dado que si no es el caso arroje un error debajo de la etiqueta label para que el usuario sea capaz de verla
                 else {
                     button.disabled = false;
                     error.textContent = '';
@@ -174,6 +189,7 @@
             } 
         </script>
 
+        <!--Llamamos a nuesta carpeta public y su contenido bootstrap mediante esta sentencia-->
         <script src="{{ asset('js/app.js') }}" type="text/js"></script>
         <script>
 

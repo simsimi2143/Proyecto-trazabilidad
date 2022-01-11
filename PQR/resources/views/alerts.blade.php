@@ -77,6 +77,7 @@
     </head>
     
     <body>
+        <!-- Esta vista lo unico que hace es retornar error o exito en caso del resultado para ingresar a trazabilidad -->
         <div id="principal" class="content">
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <div class="separacion">
@@ -127,15 +128,16 @@
                 <div>
                     <button type="submit" name="t_traza" class="btn btn-success" value="ENTRADA">Entrada</button>
                     <button type="submit" name="t_traza" class="btn btn-danger" value="SALIDA">Salida</button>
-                    <!-- onclick="confirmar()" -->
                     <input value="{{$estado}}" type="text" id="estado" class="form-control hide" disabled>
                 </div><br>
             </form>
         </div>
 
         <script>
+            // Script encargado de devolver la alerta segun el valor que tenga el input oculto de id "estado"
             $(document).ready(function() {
                 var estado = document.getElementById("estado").value;
+                // En caso de error arroja una alerta de error y vuelve a la vista QR
                 if (estado == 'error'){
                     Swal.fire({
                         icon: 'error',
@@ -147,6 +149,7 @@
                     });
                 }
                 else{
+                // En caso de exito arroja una alerta de success y retorna la vista de inicio
                     Swal.fire({
                         icon: 'success',
                         title: 'Ha registrado con éxito',

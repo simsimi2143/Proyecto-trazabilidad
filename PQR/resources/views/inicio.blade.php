@@ -138,6 +138,7 @@
                         </label>
                     </div>
 
+                    <!-- En esta seccion se oculta el pasaporte o el rut segun se elija una opción -->
                     <div class="form-check rut selectt center ">
                         <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
@@ -174,6 +175,7 @@
         </div>
 
         <script type="text/javascript">
+            // Cuando el documento se cargue, esta función oculta el campo para pasaporte por defecto
             $(document).ready(function() {
                 $("div.pasaporte").hide();
                 $('input[type="radio"]').click(function() {
@@ -184,6 +186,7 @@
                 });
             });
 
+            // Esta función limpia el input del rut en caso de que se seleccione pasaporte para no tener conflictos al momento de hacer submit
             if(document.getElementById('flexRut').checked){
                 function msg_pass(){
                     document.getElementById("rut").value = "";
@@ -196,6 +199,7 @@
             }
             
             if(document.getElementById('flexRut').checked){
+                // Esta función limpia el input del pasaporte en caso de que se seleccione rut para no tener conflictos al momento de hacer submit
                 function msg_rut(){
                     document.getElementById("pasaporte").value = "";
                     var error = document.getElementById("error");
@@ -203,54 +207,60 @@
                     var button = document.getElementById("buttonSub");
                     button.disabled = false;
                 }
+                // Función encargada de verificar si el digito verificador esta vacio, además de validar el rut con su digito verificador
                 function checkRut() {
                     var valor = document.getElementById("rut").value;
                     var dv = document.getElementById("dv").value;
                     var button = document.getElementById("buttonSub");
                     var error = document.getElementById("error");
 
-                    error.textContent = ""
+                    error.textContent = "";
 
-                    // Calcular Dígito Verificador
-                    suma = 0;
-                    multiplo = 2;
-                    
-                    // Para cada dígito del Cuerpo
-                    for(i=1;i<=valor.length;i++) {
-                    
-                        // Obtener su Producto con el Múltiplo Correspondiente
-                        index = multiplo * valor.charAt(valor.length - i);
-                        
-                        // Sumar al Contador General
-                        suma = suma + index;
-                        
-                        // Consolidar Múltiplo dentro del rango [2,7]
-                        if(multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
-                
-                    }
-                    
-                    // Calcular Dígito Verificador en base al Módulo 11
-                    dvEsperado = 11 - (suma % 11);
-                    
-                    // Casos Especiales (0 y K)
-                    dv = (dv == 'K')?10:dv;
-                    dv = (dv == 'k')?10:dv;
-                    dv = (dv == 0)?11:dv;
-                    
-                    // Validar que el Cuerpo coincide con su Dígito Verificador
-                    if((dvEsperado != dv) || (valor.length <7 )) { 
-                        // rut.setCustomValidity("RUT Inválido");
-                        error.textContent = "Su número de rut con el dígito verificador no coinciden";
-                        error.style.color = "red";
+                    if(dv==='' || valor===''){
                         button.disabled = true;
-                    }
+                    } else {
 
-                    else{
-                        button.disabled = false;
-                        error.textContent = ""
-                    }
+                        // Calcular Dígito Verificador
+                        suma = 0;
+                        multiplo = 2;
+                        
+                        // Para cada dígito del Cuerpo
+                        for(i=1;i<=valor.length;i++) {
+                        
+                            // Obtener su Producto con el Múltiplo Correspondiente
+                            index = multiplo * valor.charAt(valor.length - i);
+                            
+                            // Sumar al Contador General
+                            suma = suma + index;
+                            
+                            // Consolidar Múltiplo dentro del rango [2,7]
+                            if(multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
                     
-                    // Si todo sale bien, eliminar errores (decretar que es válido)
+                        }
+                        
+                        // Calcular Dígito Verificador en base al Módulo 11
+                        dvEsperado = 11 - (suma % 11);
+                        
+                        // Casos Especiales (0 y K)
+                        dv = (dv == 'K')?10:dv;
+                        dv = (dv == 'k')?10:dv;
+                        dv = (dv == 0)?11:dv;
+                        
+                        // Validar que el Cuerpo coincide con su Dígito Verificador
+                        if((dvEsperado != dv) || (valor.length <7 )) { 
+                            // rut.setCustomValidity("RUT Inválido");
+                            error.textContent = "Su número de rut con el dígito verificador no coinciden";
+                            error.style.color = "red";
+                            button.disabled = true;
+                        }
+
+                        else{
+                            button.disabled = false;
+                            error.textContent = ""
+                        }
+                        
+                        // Si todo sale bien, eliminar errores (decretar que es válido)
+                    }
                     
                 }
             }

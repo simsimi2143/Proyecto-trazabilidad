@@ -53,8 +53,9 @@
 
             #previsualizacion{
                 margin: 0 auto;
-                width: 320px;
-                height: 200px;
+                clip-path: inset(5% 7% 19% 7%);
+                width: 70%;
+                height: auto;
             }
 
             #code_ambi{
@@ -70,15 +71,8 @@
             .m-b-md { margin-bottom: 30px; }
 
             #video{
-                margin: 0 auto;
-                width: 320px;
-                height: 200px;
-            }
-
-            #camara{
-                position: relative;
-                clip-path: inset(5% 7% 19% 7%);
-                display: block;
+                width: auto;
+                height: auto;
             }
         </style>
     </head>
@@ -92,27 +86,37 @@
 
                 <div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
 
+                <!--Mediante la etiqueta video que esta dentro del div inciamos la llamada a la camara-->
                 <div id="video">
                     <div id="camara">
                         <video name="previsualizacion" id="previsualizacion" autoplay></video>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             
             <!-- {{-- script de implementación de la cámara scanner QR --}} -->
             <script type="text/javascript">
+                // Inicializamos una variable la cual reproduce
+                // sonido al momento de captar un qr
                 var sonido = new Audio('js/sonidito.mp3');
 
+                // Mediante esta sentencia iniciamos la llamada a la cámara
+                // mediante el id que esta almacenado en la etiqueta video
+                // definiendole un periodo de 5 segundos para capturar un elemento
                 var scanner = new Instascan.Scanner({ 
                     video: document.getElementById('previsualizacion'), 
                     scanPeriod: 5, 
                     mirror: false 
                 });
 
+
+                // Al llamar a nuestra cámara preguntamos si es que estas existen en el 
+                // dispositivo en el cual ocupamos, por ende si es que no se registran cámaras 
+                // en el dispositivo arrojará un error y una alerta al usuario
                 Instascan.Camera.getCameras().then(function(cameras) {
                     if(cameras.length > 0){
-                        scanner.start(cameras[0]);
+                        scanner.start(cameras[1]);
                     }else{
                         console.error('No se han encontrado cámaras');
                         alert('No se encontraron cámaras');
@@ -122,6 +126,9 @@
                     alert("Error:" + e);
                 });
 
+
+                // Ahora mediante este segmento de código reproduciremos un sonido cada vez que la cámara lee el qr
+                // y escribiendolo automáticamente en el input de qr para ahorrar trabajo al usuario.
                 scanner.addListener('scan', function(respuesta) {
                     sonido.play();
                     //alert("Contenido:" + respuesta);

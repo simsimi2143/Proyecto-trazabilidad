@@ -85,7 +85,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="{{route('confirma')}}" method="post" onSubmit="return confirm('¿Está seguro de los datos ingresados?');">
-                                @csrf
+                                @csrf                              
+                                    <!--Mediante el uso de sesiones llamamos a las variables del n_rut y n_com las cuales nos permiten 
+                                    seguir utilizando los datos recogidos del formulario de inicio al momento de ingresar con un rut -->
                                     <div class="container col-md-4 mb-3">
                                         <label for="num_rut" class="dato_label">{{ $n_rut }}</label><br>
                                         <label for="num_rut" class="dato_label">{{ $n_com }}</label>
@@ -126,7 +128,9 @@
                                         <label for="vacuna" class="form-label">
                                             <input type="radio" value="S" class="form-control" name="visi_esquema_completo">No realizado
                                         </label>
-
+                                        
+                                        <!--Esta opción quedo no visible para el usuario, para que al momento de guardar datos en nuestra BD
+                                        no ocurran errores. pd:esto se dejo asi por tema de tiempo de entrega del proyecto-->
                                         <label for="vacuna" class="form-label">
                                             <input style="display: none;" type="radio" value="NN" class="form-control" name="visi_esquema_completo" checked>
                                         </label>
@@ -144,7 +148,16 @@
 
         <script src="{{ asset('js/app.js') }}" type="text/js"></script>
         <script type="text/javascript">
+            // Este segmento del script nos indica que si un usuario registrado como 
+            // funcionario de planta ingresa a una sala mediante un stored procedure de sql 
+            // se le preguntará por su número de oficina correspondiente y si no es un funcionario de planta 
+            // entonces no mostrará esta información.
             var ofi = document.getElementById("oficina_cargo").value;
+
+
+            // La condicional es bastante simple si al ejecutar el stored procedure 
+            // el valor es igual a 0 la opción de número de oficina no se muestra
+            // en caso contrario se muestra la opción.
             if (ofi == 0){
                 document.getElementById("oficina").style.display= "none";
             }

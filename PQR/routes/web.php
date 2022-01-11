@@ -31,6 +31,10 @@ Route::get('qr', function () {
     return view('inicio');
 });
 
+Route::get('alerts', function () {
+    return view('inicio');
+});
+
 Route::post('alerts', function () {
     return view('alerts');
 });
