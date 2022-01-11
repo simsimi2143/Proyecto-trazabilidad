@@ -30,6 +30,9 @@ class ConfirmaController extends Controller {
             $oficina = $_POST['oficina'];
             $visi_esquema_completo = $_POST['visi_esquema_completo'];
 
+            if($visi_esquema_completo == "NN"){
+                $visi_esquema_completo = '';
+            }
             
             $query_uct = DB::select("SET NOCOUNT ON; exec TRAZA.dbo.confirma_registro @pers_rut_nro = ?, @pers_dv = ?, @pers_email = ?, @pers_fono_per = ?, @pers_esquema_completo = ?, @pers_extra1 = ?", [$n_rut,$n_dv,$email,$tel,$visi_esquema_completo,$oficina]);
             return view('qr',[

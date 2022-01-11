@@ -35,17 +35,23 @@ class RegistroController extends Controller {
             $visi_extra3 = '';
             $usuario_mod = $n_rut;
 
+            if($visi_esquema_completo == "NN"){
+                $visi_esquema_completo = '';
+            }
+
 
             // Condicional para cuando se selecciona un radio se defina si la persona es femenina o masculino
             if($sexo_codigo == 1) {
                 $sexo_nombre = "Masculino";
             } else if($sexo_codigo == 2) {
                 $sexo_nombre = "Femenino";
-            } else {
+            } else if($sexo_codigo == 3) {
                 $sexo_nombre = "Otro";
+            } else {
+                $sexo_nombre = '';
             }
 
-            $query_uct = DB::select("SET NOCOUNT ON; SET DATEFORMAT DMY; exec TRAZA.dbo.ingresa_visita @visi_rut_nro = ?, @visi_dv = ?, @visi_paterno = ?, 
+            $query_uct = DB::select("SET NOCOUNT ON; SET DATEFORMAT ymd; exec TRAZA.dbo.ingresa_visita @visi_rut_nro = ?, @visi_dv = ?, @visi_paterno = ?, 
             @visi_materno = ?, @visi_nombres = ?, @visi_email = ?, @visi_fono_per = ?, @sexo_codigo = ?, @sexo_nombre = ?, @visi_fecha_nac = ?, 
             @visi_cargo = ?, @visi_esquema_completo = ?, @visi_extra1 = ?, @visi_extra2 = ?, @visi_extra3 = ?, @usuario_mod = ?", [$n_rut, $n_dv, 
             $visi_paterno, $visi_materno, $visi_nombres, $visi_email, $visi_fono_per, $sexo_codigo, $sexo_nombre, $visi_fecha_nac, $visi_cargo,

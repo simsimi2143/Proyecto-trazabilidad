@@ -72,17 +72,17 @@
                                     @csrf
                                     <div class="container col-md-4 mb-3">
                                         <label for="nombre" class="datos form-label">Nombres</label>
-                                        <input type="text" class="form-control" name="visi_nombres" placeholder="Nombres" pattern="[A-Za-z]">
+                                        <input type="text" class="form-control" name="visi_nombres" placeholder="Nombres" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_p" class="datos form-label">Apellido paterno</label>
-                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[A-Za-z]">
+                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_m" class="datos form-label">Apellido materno</label>
-                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[A-Za-z]">
+                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
@@ -92,7 +92,7 @@
 
                                     <div class="form-check container col-md-4 mb-3">
                                         <label for="sexo" class="form-label">
-                                            <input id="sexo_codigo" value=1 type="radio" class="form-control" name="sexo_codigo" checked>Masculino 
+                                            <input id="sexo_codigo" value=1 type="radio" class="form-control" name="sexo_codigo">Masculino 
                                         </label>
 
                                         <label for="sexo" class="form-label">
@@ -101,6 +101,10 @@
 
                                         <label for="sexo" class="form-label">
                                             <input id="sexo_codigo" value=3 type="radio" class="form-control" name="sexo_codigo">Otro
+                                        </label>
+
+                                        <label for="sexo" class="form-label">
+                                            <input id="sexo_codigo" style="display: none;" value="NN" type="radio" class="form-control" name="sexo_codigo" checked>
                                         </label>
                                     </div>
 
@@ -120,7 +124,7 @@
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="email" class="datos form-label">E-mail</label>
-                                        <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="visi_email" required placeholder="Example@gmail.com">
+                                        <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="visi_email" placeholder="Example@gmail.com">
                                     </div><br>
 
                                     <div class="form-check container col-md-4 mb-3">
@@ -134,7 +138,11 @@
                                         </label>
 
                                         <label for="vacuna" class="form-label">
-                                            <input type="radio" value="S" class="form-control" name="visi_esquema_completo" checked>No realizado
+                                            <input type="radio" value="S" class="form-control" name="visi_esquema_completo">No realizado
+                                        </label>
+
+                                        <label for="vacuna" class="form-label">
+                                            <input style="display: none;" type="radio" value="NN" class="form-control" name="visi_esquema_completo" checked>
                                         </label>
                                     </div>
                                     

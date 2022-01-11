@@ -31,6 +31,10 @@ Route::get('qr', function () {
     return view('inicio');
 });
 
+Route::post('alerts', function () {
+    return view('alerts');
+});
+
 Route::post('/', 'App\Http\Controllers\RutPasaporteController@index')->name('inicio');
 
 Route::post('registro', 'App\Http\Controllers\RegistroController@index')->name('registro');

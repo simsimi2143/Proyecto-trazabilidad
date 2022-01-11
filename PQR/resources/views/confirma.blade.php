@@ -124,7 +124,11 @@
                                         </label>
 
                                         <label for="vacuna" class="form-label">
-                                            <input type="radio" value="S" class="form-control" name="visi_esquema_completo" checked>No realizado
+                                            <input type="radio" value="S" class="form-control" name="visi_esquema_completo">No realizado
+                                        </label>
+
+                                        <label for="vacuna" class="form-label">
+                                            <input style="display: none;" type="radio" value="NN" class="form-control" name="visi_esquema_completo" checked>
                                         </label>
                                     </div>
                                     

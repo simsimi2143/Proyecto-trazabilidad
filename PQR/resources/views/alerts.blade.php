@@ -7,10 +7,14 @@
         <title>Trazabilidad UCT</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="sweetalert2.all.min.js"></script>
+        <script src="sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="sweetalert2.min.css">
         <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         
         <style>
             html, body {
@@ -18,18 +22,11 @@
                 font-family: 'Roboto', sans-serif;
                 font-weight: 200;
                 height: 100vh;
-                margin: 0 auto;
-            }
-
-            small{
-                text-align: center;
-                color: #636b6f;
+                margin: 0;
             }
             
             #principal{
                 padding-top: 3%;
-                display: block;
-                text-align: center;
             }
 
             .full-height { height: 100vh; }
@@ -53,17 +50,9 @@
 
             #previsualizacion{
                 margin: 0 auto;
-                width: 320px;
-                height: 200px;
             }
 
-            #code_ambi{
-                height: 50px;
-                width: 360px;
-                margin: 0 auto;
-                font-weight: bold;
-                font-size: 18pt;
-            }
+            .content { text-align: center; }
 
             .title { font-size: 84px; }
             
@@ -71,14 +60,18 @@
 
             #video{
                 margin: 0 auto;
-                width: 320px;
+                width: 300px;
                 height: 200px;
             }
 
-            #camara{
-                position: relative;
-                clip-path: inset(5% 7% 19% 7%);
-                display: block;
+            .camara{
+                clip-path: inset(5% 20% 15% 10%);
+                width: 300px;
+                height: 200px;
+            }
+
+            .hide{
+                display: none;
             }
         </style>
     </head>
@@ -88,19 +81,17 @@
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <div class="separacion">
                 <h2>Módulo de Trazabilidad</h2>
-                <small>Bienvenido/a {{$n_com}}</small>
+                <small>Bienvenido/a</small>
 
                 <div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
 
                 <div id="video">
-                    <div id="camara">
-                        <video name="previsualizacion" id="previsualizacion" autoplay></video>
+                    <div class="camara">
+                        <video name="previsualizacion" id="previsualizacion" style="width:300px; height:200px;"></video>
                     </div>
                 </div>
             </div> 
-
             
-            <!-- {{-- script de implementación de la cámara scanner QR --}} -->
             <script type="text/javascript">
                 var sonido = new Audio('js/sonidito.mp3');
 
@@ -109,7 +100,7 @@
                     scanPeriod: 5, 
                     mirror: false 
                 });
-
+        
                 Instascan.Camera.getCameras().then(function(cameras) {
                     if(cameras.length > 0){
                         scanner.start(cameras[0]);
@@ -125,21 +116,48 @@
                 scanner.addListener('scan', function(respuesta) {
                     sonido.play();
                     //alert("Contenido:" + respuesta);
-                    document.getElementById('code_ambi').value=respuesta; //code_ambi es el input para escribir el QR
+                    document.getElementById('code_ambi').value=respuesta;          
                 });
             </script>
-
             
-            <form action="{{route('qr')}}" method="post">
+            <form action="#" method="post">
                 @csrf
-                <input class="container form-control text-center col-md-4" type="text" autofocus placeholder="O escriba el código QR" name="code_ambi" id="code_ambi" required><br>
+                <input class="container form-control text-center col-md-4" type="text" autofocus placeholder="O escriba el código QR" name="code_ambi" id="code_ambi"><br>
 
                 <div>
-                    <button name="t_traza" class="btn btn-success" value="ENTRADA">Entrada</button>
-                    <button name="t_traza" class="btn btn-danger" value="SALIDA">Salida</button>
+                    <button type="submit" name="t_traza" class="btn btn-success" value="ENTRADA">Entrada</button>
+                    <button type="submit" name="t_traza" class="btn btn-danger" value="SALIDA">Salida</button>
+                    <!-- onclick="confirmar()" -->
+                    <input value="{{$estado}}" type="text" id="estado" class="form-control hide" disabled>
                 </div><br>
             </form>
         </div>
+
+        <script>
+            $(document).ready(function() {
+                var estado = document.getElementById("estado").value;
+                if (estado == 'error'){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'El código ingresado no es válido',
+                        showConfirmButton: false,
+                        timer: 2000,
+                    }).then(function(){
+                        return view('qr');
+                    });
+                }
+                else{
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Ha registrado con éxito',
+                        showConfirmButton: false,
+                        timer: 2000,
+                    }).then(function(){
+                        window.location.href = "/";
+                    });
+                }          
+            });
+        </script>
     
         <script src="{{ asset('js/app.js') }}" type="text/js"></script>
             

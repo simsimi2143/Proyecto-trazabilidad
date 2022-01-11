@@ -33,8 +33,11 @@ class EscanerController extends Controller {
             $query_ambi = DB::select("SET NOCOUNT ON; exec TRAZA.dbo.buscar_ambiente @campo = ?, @valor = ?", [$campo,$code_ambi]);
 
             if($query_ambi == []){
-                 return view('qr',[
-                    "n_com" => $nom_com]);
+                $estado = 'error';
+                return view('alerts',[
+                    "estado" => $estado,
+                    "n_com" => $nom_com
+                ]);
             }
             else{
                 $query_uct = DB::select("SET NOCOUNT ON; exec TRAZA.dbo.ingresa_trazabilidad @pers_rut_nro = ?, @pers_dv = ?, @ambi_codigo = ?, @traz_tipo = ?", [$n_rut,$n_dv,$code_ambi,$t_traza]);
@@ -42,7 +45,10 @@ class EscanerController extends Controller {
                     return view('qr');
                 }
                 else{
-                    return view('inicio');
+                    $estado = 'exito';
+                    return view('alerts',[
+                        "estado" => $estado
+                    ]);
                 }               
             }
         }
