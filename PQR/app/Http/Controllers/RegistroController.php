@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use hisorange\BrowserDetect\Parser as Browser;
 
 class RegistroController extends Controller {
+    
     public function index() {
         // Preguntamos si la sesión existente está activa
         // ya que de esta forma procedemos a tomar los valores adquiridos de la vista anterior 

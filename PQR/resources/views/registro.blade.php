@@ -84,12 +84,12 @@
                                      que están en la base de datos-->
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_p" class="datos form-label">Apellido paterno</label>
-                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
+                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_m" class="datos form-label">Apellido materno</label>
-                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
+                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">

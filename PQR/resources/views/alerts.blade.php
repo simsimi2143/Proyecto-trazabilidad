@@ -15,30 +15,31 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        
+
         <style>
             html, body {
                 color: #636b6f;
                 font-family: 'Roboto', sans-serif;
                 font-weight: 200;
                 height: 100vh;
-                margin: 0;
+                margin: 0 auto;
             }
-            
+            small{
+                text-align: center;
+                color: #636b6f;
+            }
             #principal{
                 padding-top: 3%;
+                display: block;
+                text-align: center;
             }
 
             .full-height { height: 100vh; }
-
             .flex-center {
                 align-items: center;
                 display: flex;
                 justify-content: center;
             }
-
-            .position-ref { position: relative; }
-
             .top-right {
                 position: absolute;
                 right: 10px;
@@ -46,32 +47,52 @@
             }
             .separacion{
                 padding: 3%;
+                position: relative;
             }
-
             #previsualizacion{
                 margin: 0 auto;
+                clip-path: inset(23% 13% 35% 10%);
+                width: 70%;
+                height: auto;
+                display: block; 
+                display: inline-block;
+                line-height: 0;
+                font-size: 3px;
             }
-
-            .content { text-align: center; }
+            #code_ambi{
+                height: 50px;
+                width: 360px;
+                margin: 0 auto;
+                font-weight: bold;
+                font-size: 18pt;
+                position: absolute;
+                top: 550px;
+                left: 4px;
+                right: 2px;
+            }
+            #botones{
+                position: absolute;
+                top: 625px;
+                left: 4px;
+                right: 2px;
+            }
 
             .title { font-size: 84px; }
             
             .m-b-md { margin-bottom: 30px; }
-
             #video{
-                margin: 0 auto;
-                width: 300px;
-                height: 200px;
+                width: auto;
+                height: auto;
             }
-
-            .camara{
-                clip-path: inset(5% 20% 15% 10%);
-                width: 300px;
-                height: 200px;
+            #formulario{
+                margin-bottom: 40px;
             }
-
             .hide{
                 display: none;
+            }
+
+            .swal2-popup {
+                font-size: 0.5rem !important;
             }
         </style>
     </head>
@@ -87,9 +108,24 @@
                 <div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
 
                 <div id="video">
-                    <div class="camara">
-                        <video name="previsualizacion" id="previsualizacion" style="width:300px; height:200px;"></video>
-                    </div>
+                    <video name="previsualizacion" id="previsualizacion" autoplay></video>
+                </div>
+
+                <div>
+                    <form action="#" method="post">
+                        @csrf
+                        <input class="container form-control text-center col-md-4" type="text" autofocus placeholder="O escriba el código QR" name="code_ambi" id="code_ambi"><br>
+        
+                        <div>
+                            <div id="botones">
+                                <button type="submit" name="t_traza" class="btn btn-success" value="ENTRADA">Entrada</button>
+                                <button type="submit" name="t_traza" class="btn btn-danger" value="SALIDA">Salida</button>
+                            </div>
+                            <input value="{{$estado}}" type="text" id="estado" class="form-control hide" disabled>
+                            <input value="{{$nom_ambi}}" type="text" id="nom_ambi" class="form-control hide" disabled>
+                            <input value="{{$t_traza}}" type="text" id="t_traza" class="form-control hide" disabled>
+                        </div><br>
+                    </form>
                 </div>
             </div> 
             
@@ -114,29 +150,25 @@
                     alert("Error:" + e);
                 });
 
-                scanner.addListener('scan', function(respuesta) {
+                window.navigator = window.navigator || {};
+
+                scanner.addListener('scan',vibrate(1000), function(respuesta) {
                     sonido.play();
-                    //alert("Contenido:" + respuesta);
-                    document.getElementById('code_ambi').value=respuesta;          
+                    navigator.vibrate(respuesta);
+                    document.getElementById('code_ambi').value=respuesta; //code_ambi es el input para escribir el QR
+                    document.getElementById('code_ambi').addEventListener(function(respuesta){
+                        navigator.vibrate([1000, 500, 1000, 500, 2000]);
+                    });
                 });
             </script>
-            
-            <form action="#" method="post">
-                @csrf
-                <input class="container form-control text-center col-md-4" type="text" autofocus placeholder="O escriba el código QR" name="code_ambi" id="code_ambi"><br>
-
-                <div>
-                    <button type="submit" name="t_traza" class="btn btn-success" value="ENTRADA">Entrada</button>
-                    <button type="submit" name="t_traza" class="btn btn-danger" value="SALIDA">Salida</button>
-                    <input value="{{$estado}}" type="text" id="estado" class="form-control hide" disabled>
-                </div><br>
-            </form>
         </div>
 
         <script>
             // Script encargado de devolver la alerta segun el valor que tenga el input oculto de id "estado"
             $(document).ready(function() {
                 var estado = document.getElementById("estado").value;
+                var nom_ambi = document.getElementById("nom_ambi").value;
+                var t_traza = document.getElementById("t_traza").value;
                 // En caso de error arroja una alerta de error y vuelve a la vista QR
                 if (estado == 'error'){
                     Swal.fire({
@@ -152,9 +184,9 @@
                 // En caso de exito arroja una alerta de success y retorna la vista de inicio
                     Swal.fire({
                         icon: 'success',
-                        title: 'Ha registrado con éxito',
+                        title: 'Ha registrado '+t_traza+' con éxito a '+nom_ambi,
                         showConfirmButton: false,
-                        timer: 2000,
+                        timer: 4500,
                     }).then(function(){
                         window.location.href = "/";
                     });

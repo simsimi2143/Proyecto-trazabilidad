@@ -138,7 +138,8 @@
                         </label>
                     </div>
 
-                    <!-- En esta seccion se oculta el pasaporte o el rut segun se elija una opción -->
+                    <!-- En esta seccion se oculta el pasaporte o el rut segun se elija una opcion -->
+
                     <div class="form-check rut selectt center ">
                         <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
@@ -154,7 +155,7 @@
                     <div class="form-check pasaporte selectt hide center">
                         <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
-                               <input class="form-control form-control-lg" size=8 minlength="7" maxlength="15" type="text" pattern="[0-9]+" name="pasaporte" pattern="[A-Za-z0-9]+" id="pasaporte" placeholder="N° pasaporte">
+                               <input class="form-control form-control-lg" size=8 minlength="3" maxlength="15" type="text" pattern="[0-9]+" name="pasaporte" pattern="[A-Za-z0-9]+" id="pasaporte" oninput="checkPass()" placeholder="N° pasaporte">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">
@@ -175,7 +176,7 @@
         </div>
 
         <script type="text/javascript">
-            // Cuando el documento se cargue, esta función oculta el campo para pasaporte por defecto
+            // Cuando el documento se cargue, esta funcion oculta el campo para pasaporte por defecto
             $(document).ready(function() {
                 $("div.pasaporte").hide();
                 $('input[type="radio"]').click(function() {
@@ -186,10 +187,15 @@
                 });
             });
 
-            // Esta función limpia el input del rut en caso de que se seleccione pasaporte para no tener conflictos al momento de hacer submit
+
+
+            // Esta funcion limpia el input del rut en caso de que se seleccione pasaporte para no tener conflictos al momento de hacer submit
             if(document.getElementById('flexRut').checked){
+                document.getElementById("buttonSub").disabled = true;
+                var pass = document.getElementById("pasaporte");
                 function msg_pass(){
                     document.getElementById("rut").value = "";
+                    document.getElementById("dv").value = "";
                     var button = document.getElementById("buttonSub");
                     button.disabled = false;
                     var error = document.getElementById("error");
@@ -199,16 +205,16 @@
             }
             
             if(document.getElementById('flexRut').checked){
-                // Esta función limpia el input del pasaporte en caso de que se seleccione rut para no tener conflictos al momento de hacer submit
+                // Esta funcion limpia el input del pasaporte en caso de que se seleccione rut para no tener conflictos al momento de hacer submit
                 function msg_rut(){
+                    document.getElementById("buttonSub").disabled = true;
                     document.getElementById("pasaporte").value = "";
                     var error = document.getElementById("error");
                     error.textContent = "";
-                    var button = document.getElementById("buttonSub");
-                    button.disabled = false;
                 }
-                // Función encargada de verificar si el digito verificador esta vacio, además de validar el rut con su digito verificador
+                // Funcion encargada de verificar si el digito verificador esta vacio, ademas de validar el rut con su digito verificador
                 function checkRut() {
+                    document.getElementById("buttonSub").disabled = true;
                     var valor = document.getElementById("rut").value;
                     var dv = document.getElementById("dv").value;
                     var button = document.getElementById("buttonSub");

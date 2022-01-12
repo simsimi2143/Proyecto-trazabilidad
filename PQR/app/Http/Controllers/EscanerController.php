@@ -12,8 +12,9 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use hisorange\BrowserDetect\Parser as Browser;
 
 class EscanerController extends Controller {
+    
     public function index() {
-        // Pregunta si existe la sesión, sino avanza
+        //Pregunta si existe la sesion, sino avanza
         if(!session()->has('rut_nro')) {
             return view('inicio');
         } else {
@@ -30,22 +31,28 @@ class EscanerController extends Controller {
 
             //Si no existe nos enseñara un error y volvera a la pantalla del QR
             if($query_ambi == []){
+                $nom_ambi = '';
                 $estado = 'error';
                 return view('alerts',[
                     "estado" => $estado,
-                    "n_com" => $nom_com
+                    "n_com" => $nom_com,
+                    "nom_ambi" => $nom_ambi,
+                    "t_traza" => $t_traza
                 ]);
             }
             // Si existe procedera a ejecutar la sentencia SQL e ingresar el dato en la tabla de trazabilidad y un mensaje de suceso
             else{
-                $query_uct = DB::select("SET NOCOUNT ON; exec TRAZA.dbo.ingresa_trazabilidad @pers_rut_nro = ?, @pers_dv = ?, @ambi_codigo = ?, @traz_tipo = ?", [$n_rut,$n_dv,$code_ambi,$t_traza]);
+                $query_uct = DB::select("SET NOCOUNT ON; exec TRAZA.dbo.confirma_trazabilidad @traz_tipo = ?, @pers_rut_nro = ?, @pers_dv = ?, @ambi_codigo = ?", [$t_traza,$n_rut,$n_dv,$code_ambi]);
+                $nom_ambi = $query_ambi[0]->ambi_nombre;
                 if($query_uct==[]){
                     return view('qr');
                 }
                 else{
                     $estado = 'exito';
                     return view('alerts',[
-                        "estado" => $estado
+                        "estado" => $estado,
+                        "nom_ambi" => $nom_ambi,
+                        "t_traza" => $t_traza
                     ]);
                 }               
             }

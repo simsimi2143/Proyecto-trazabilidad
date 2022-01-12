@@ -40,8 +40,6 @@
                 justify-content: center;
             }
 
-            .position-ref { position: relative; }
-
             .top-right {
                 position: absolute;
                 right: 10px;
@@ -49,13 +47,18 @@
             }
             .separacion{
                 padding: 3%;
+                position: relative;
             }
 
             #previsualizacion{
                 margin: 0 auto;
-                clip-path: inset(5% 7% 19% 7%);
+                clip-path: inset(23% 13% 35% 10%);
                 width: 70%;
                 height: auto;
+                display: block; 
+                display: inline-block;
+                line-height: 0;
+                font-size: 3px;
             }
 
             #code_ambi{
@@ -64,6 +67,17 @@
                 margin: 0 auto;
                 font-weight: bold;
                 font-size: 18pt;
+                position: absolute;
+                top: 550px;
+                left: 4px;
+                right: 2px;
+            }
+
+            #botones{
+                position: absolute;
+                top: 625px;
+                left: 4px;
+                right: 2px;
             }
 
             .title { font-size: 84px; }
@@ -73,6 +87,10 @@
             #video{
                 width: auto;
                 height: auto;
+            }
+
+            #formulario{
+                margin-bottom: 40px;
             }
         </style>
     </head>
@@ -88,9 +106,19 @@
 
                 <!--Mediante la etiqueta video que esta dentro del div inciamos la llamada a la camara-->
                 <div id="video">
-                    <div id="camara">
-                        <video name="previsualizacion" id="previsualizacion" autoplay></video>
-                    </div>
+                    <video name="previsualizacion" id="previsualizacion" autoplay></video>
+                </div>
+
+                <div>
+                    <form id="formulario" action="{{route('qr')}}" method="post">
+                        @csrf
+                        <input class="container form-control text-center col-md-4" type="text" autofocus placeholder="O escriba el código QR" name="code_ambi" id="code_ambi" required><br>
+        
+                        <div id="botones">
+                            <button name="t_traza" class="btn btn-success" value="ENTRADA">Entrada</button>
+                            <button name="t_traza" class="btn btn-danger" value="SALIDA">Salida</button><br>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -116,7 +144,7 @@
                 // en el dispositivo arrojará un error y una alerta al usuario
                 Instascan.Camera.getCameras().then(function(cameras) {
                     if(cameras.length > 0){
-                        scanner.start(cameras[1]);
+                        scanner.start(cameras[0]);
                     }else{
                         console.error('No se han encontrado cámaras');
                         alert('No se encontraron cámaras');
@@ -126,26 +154,19 @@
                     alert("Error:" + e);
                 });
 
+                window.navigator = window.navigator || {};
 
                 // Ahora mediante este segmento de código reproduciremos un sonido cada vez que la cámara lee el qr
                 // y escribiendolo automáticamente en el input de qr para ahorrar trabajo al usuario.
                 scanner.addListener('scan', function(respuesta) {
                     sonido.play();
-                    //alert("Contenido:" + respuesta);
                     document.getElementById('code_ambi').value=respuesta; //code_ambi es el input para escribir el QR
+                    document.getElementById('code_ambi').addEventListener(function(respuesta){
+                        navigator.vibrate([1000, 500, 1000, 500, 2000]);
+                    });
                 });
+
             </script>
-
-            
-            <form action="{{route('qr')}}" method="post">
-                @csrf
-                <input class="container form-control text-center col-md-4" type="text" autofocus placeholder="O escriba el código QR" name="code_ambi" id="code_ambi" required><br>
-
-                <div>
-                    <button name="t_traza" class="btn btn-success" value="ENTRADA">Entrada</button>
-                    <button name="t_traza" class="btn btn-danger" value="SALIDA">Salida</button>
-                </div><br>
-            </form>
         </div>
     
         <script src="{{ asset('js/app.js') }}" type="text/js"></script>

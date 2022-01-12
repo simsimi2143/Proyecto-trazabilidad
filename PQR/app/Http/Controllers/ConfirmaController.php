@@ -12,8 +12,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use hisorange\BrowserDetect\Parser as Browser;
 
 class ConfirmaController extends Controller {
-    public function index()
-    {
+    
+    public function index() {
         //Declaracion de varaibles a partir de la informacion de la sesion
         // $n_rut = session('rut_nro');
         // $n_dv  = session('dv_nro'); 
