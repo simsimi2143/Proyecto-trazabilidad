@@ -131,10 +131,10 @@
                 <div class="container">
                     <div class="form-check ">
                         <label class="form-check-label" for="flexRut">
-                            <input class="form-check-input" type="radio" value="rut" name="flexRut" id="flexRut" onclick="msg_rut()" checked>RUN
+                            <input class="form-check-input" type="radio" value="rut" name="flexRut" id="flexRut" onclick="msg_rut()" checked autocomplete="off">RUN
                         </label>                     
                         <label class="form-check-label" for="flexPasaporte">
-                            <input class="form-check-input" type="radio" value="pasaporte" name="flexRut" id="flexPasaporte" onclick="msg_pass()" >Pasaporte
+                            <input class="form-check-input" type="radio" value="pasaporte" name="flexRut" id="flexPasaporte" onclick="msg_pass()" autocomplete="off">Pasaporte
                         </label>
                     </div>
 

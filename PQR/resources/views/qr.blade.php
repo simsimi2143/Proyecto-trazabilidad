@@ -7,7 +7,7 @@
         <title>Trazabilidad UCT</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+        <script src="https://unpkg.com/html5-qrcode"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
@@ -37,21 +37,6 @@
                 display: block;
             }
 
-            #previsualizacion{
-                clip-path: inset(0 13% 48% 10%);
-                width: 70%;
-                display: absolute;
-                text-align: center;
-                margin-top: 0 auto;            
-            }
-
-            #video{
-                width: auto;
-                height: auto;
-                justify-content: center;
-                margin: 0 auto;
-            }
-
             #code_ambi{
                 height: 50px;
                 width: 360px;
@@ -59,13 +44,13 @@
                 font-weight: bold;
                 font-size: 18pt;
                 position: absolute;
-                top: 60%;
+                top: 90%;
                 left: 4px;
                 right: 2px;
             }
             #botones{
                 position: absolute;
-                top: 75%;
+                top: 105%;
                 left: 4px;
                 right: 2px;
             }
@@ -98,10 +83,11 @@
 
                 <div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
 
-                <!--Mediante la etiqueta video que esta dentro del div inciamos la llamada a la camara-->
-                <div id="video">
-                    <video name="previsualizacion" id="previsualizacion" autoplay></video>
+                <div class="row justify-content-center h-25">
+                    <div id="video" class="col-md-4"></div>
+                    <div id="lectorqr"></div>
                 </div>
+
 
                 <div>
                     <form id="formulario" action="{{route('qr')}}" method="post">
@@ -123,41 +109,30 @@
                 // sonido al momento de captar un qr
                 var sonido = new Audio('js/sonidito.mp3');
 
-                // Mediante esta sentencia iniciamos la llamada a la cámara
-                // mediante el id que esta almacenado en la etiqueta video
-                // definiendole un periodo de 5 segundos para capturar un elemento
-                var scanner = new Instascan.Scanner({ 
-                    video: document.getElementById('previsualizacion'), 
-                    scanPeriod: 5, 
-                    mirror: false 
-                });
-
-
-                // Al llamar a nuestra cámara preguntamos si es que estas existen en el 
-                // dispositivo en el cual ocupamos, por ende si es que no se registran cámaras 
-                // en el dispositivo arrojará un error y una alerta al usuario
-                Instascan.Camera.getCameras().then(function(cameras) {
-                    if(cameras.length > 1) {
-                        scanner.start(cameras[1]);     // 1 es cámara trasera
-                    }else if(cameras.length > 0) {     
-                        scanner.start(cameras[0]);     // 0 es cámara frontal
-                    }else{
-                        console.error('No se han encontrado cámaras');
-                        alert('No se encontraron cámaras');
+                function docReady(fn) {
+                    // see if DOM is already available
+                    if (document.readyState === "complete"
+                    || document.readyState === "interactive") {
+                        // call on next available tick
+                        setTimeout(fn, 1);
+                    } else {
+                        document.addEventListener("DOMContentLoaded", fn);
                     }
-                }).catch(function(e){
-                    console.error(e);
-                    alert("Error:" + e);
-                });
+                }
 
-                // Ahora mediante este segmento de código reproduciremos un sonido cada vez que la cámara lee el qr
-                // y escribiendolo automáticamente en el input de qr para ahorrar trabajo al usuario.
-                scanner.addListener('scan', function(respuesta) {
-                    sonido.play();
-                    document.getElementById('code_ambi').value=respuesta; //code_ambi es el input para escribir el QR
-                    navigator.vibrate(1000);
+                docReady(function(){
+                    var resultContainer = document.getElementById('lectorqr');
+                    
+                    function onScanSuccess(respuesta) {
+                        sonido.play();
+                        document.getElementById('code_ambi').value=respuesta; //code_ambi es el input para escribir el QR
+                        navigator.vibrate(1000);
+                    }
+                
+                    var html5QrcodeScanner = new Html5QrcodeScanner(
+                        "video", { fps: 10, qrbox: 250 });
+                        html5QrcodeScanner.render(onScanSuccess);
                 });
-
             </script>
         </div>
     
