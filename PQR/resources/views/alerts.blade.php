@@ -24,41 +24,36 @@
                 height: 100vh;
                 margin: 0 auto;
             }
+
             small{
                 text-align: center;
                 color: #636b6f;
             }
+            
             #principal{
                 padding-top: 3%;
                 display: block;
                 text-align: center;
             }
-
-            .full-height { height: 100vh; }
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
             .separacion{
                 padding: 3%;
                 position: relative;
+                display: block;
             }
+
             #previsualizacion{
-                margin: 0 auto;
-                clip-path: inset(23% 13% 35% 10%);
+                clip-path: inset(0 13% 48% 10%);
                 width: 70%;
+                display: absolute;
+                text-align: center;
+                margin-top: 0 auto;            }
+            #video{
+                width: auto;
                 height: auto;
-                display: block; 
-                display: inline-block;
-                line-height: 0;
-                font-size: 3px;
+                justify-content: center;
+                margin: 0 auto;
             }
+
             #code_ambi{
                 height: 50px;
                 width: 360px;
@@ -66,24 +61,17 @@
                 font-weight: bold;
                 font-size: 18pt;
                 position: absolute;
-                top: 550px;
+                top: 60%;
                 left: 4px;
                 right: 2px;
             }
             #botones{
                 position: absolute;
-                top: 625px;
+                top: 75%;
                 left: 4px;
                 right: 2px;
             }
 
-            .title { font-size: 84px; }
-            
-            .m-b-md { margin-bottom: 30px; }
-            #video{
-                width: auto;
-                height: auto;
-            }
             #formulario{
                 margin-bottom: 40px;
             }
@@ -95,6 +83,19 @@
                 font-size: 0.5rem !important;
             }
         </style>
+
+        <script>
+            function isMobile(){
+                return (
+                    (navigator.userAgent.match(/Android/i)) ||
+                    (navigator.userAgent.match(/webOS/i)) ||
+                    (navigator.userAgent.match(/iPhone/i)) ||
+                    (navigator.userAgent.match(/iPod/i)) ||
+                    (navigator.userAgent.match(/iPad/i)) ||
+                    (navigator.userAgent.match(/BlackBerry/i))
+                );
+            }
+        </script>
     </head>
     
     <body>
@@ -103,7 +104,7 @@
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <div class="separacion">
                 <h2>Módulo de Trazabilidad</h2>
-                <small>Bienvenido/a</small>
+                <small>Bienvenido/a {{$n_com}}</small>
 
                 <div class="titulo">Escanéa o ingresa el código QR a registrar</div><br>
 
@@ -112,7 +113,7 @@
                 </div>
 
                 <div>
-                    <form action="#" method="post">
+                    <form action="{{route('qr')}}" method="post">
                         @csrf
                         <input class="container form-control text-center col-md-4" type="text" autofocus placeholder="O escriba el código QR" name="code_ambi" id="code_ambi"><br>
         
@@ -129,18 +130,30 @@
                 </div>
             </div> 
             
+            <!-- {{-- script de implementación de la cámara scanner QR --}} -->
             <script type="text/javascript">
+                // Inicializamos una variable la cual reproduce
+                // sonido al momento de captar un qr
                 var sonido = new Audio('js/sonidito.mp3');
 
+                // Mediante esta sentencia iniciamos la llamada a la cámara
+                // mediante el id que esta almacenado en la etiqueta video
+                // definiendole un periodo de 5 segundos para capturar un elemento
                 var scanner = new Instascan.Scanner({ 
                     video: document.getElementById('previsualizacion'), 
                     scanPeriod: 5, 
                     mirror: false 
                 });
-        
+
+
+                // Al llamar a nuestra cámara preguntamos si es que estas existen en el 
+                // dispositivo en el cual ocupamos, por ende si es que no se registran cámaras 
+                // en el dispositivo arrojará un error y una alerta al usuario
                 Instascan.Camera.getCameras().then(function(cameras) {
-                    if(cameras.length > 0){
-                        scanner.start(cameras[0]);
+                    if(cameras.length > 1) {
+                        scanner.start(cameras[1]);    // 1 es cámara trasera
+                    }else if(cameras.length > 0) {
+                        scanner.start(cameras[0]);    // 0 es cámara frontal
                     }else{
                         console.error('No se han encontrado cámaras');
                         alert('No se encontraron cámaras');
@@ -150,15 +163,13 @@
                     alert("Error:" + e);
                 });
 
-                window.navigator = window.navigator || {};
 
-                scanner.addListener('scan',vibrate(1000), function(respuesta) {
+                // Ahora mediante este segmento de código reproduciremos un sonido cada vez que la cámara lee el qr
+                // y escribiendolo automáticamente en el input de qr para ahorrar trabajo al usuario.
+                scanner.addListener('scan', function(respuesta) {
                     sonido.play();
-                    navigator.vibrate(respuesta);
                     document.getElementById('code_ambi').value=respuesta; //code_ambi es el input para escribir el QR
-                    document.getElementById('code_ambi').addEventListener(function(respuesta){
-                        navigator.vibrate([1000, 500, 1000, 500, 2000]);
-                    });
+                    navigator.vibrate(1000);
                 });
             </script>
         </div>
@@ -176,9 +187,7 @@
                         title: 'El código ingresado no es válido',
                         showConfirmButton: false,
                         timer: 2000,
-                    }).then(function(){
-                        return view('qr');
-                    });
+                    })
                 }
                 else{
                 // En caso de exito arroja una alerta de success y retorna la vista de inicio

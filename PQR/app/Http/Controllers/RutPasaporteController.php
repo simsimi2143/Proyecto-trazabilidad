@@ -29,7 +29,7 @@ class RutPasaporteController extends Controller {
             session(['rut_nro' => $_POST['rut']]);
             session(['dv_nro' => $_POST['dv']]);
         }
-        //Declaracion de varaibles a partir de la informacion de la sesion
+        //Declaracion de variables a partir de la informacion de la sesion
         $n_rut = session('rut_nro');
         $n_dv  = session('dv_nro'); 
 
@@ -81,7 +81,9 @@ class RutPasaporteController extends Controller {
             if ($query_uct == []){
                 // Si no existe en la vista_personas es vacio retorna al registro
                 // return $n_rut.'-'.$n_dv;
-                return view('registro');
+                return view('registro',[
+                    "n_rut" => $a_rut_nro
+                ]);
             }
             else{
                 //Si existe la persona en la vista_personas
@@ -107,7 +109,7 @@ class RutPasaporteController extends Controller {
                 }
                 else{
                     // 1 o más = si existe registro de confirmación del rut
-                    
+                    session(['nom_com' => $nom_com]);
                     return view('qr',[
                         "n_com" => $nom_com]);
                 }

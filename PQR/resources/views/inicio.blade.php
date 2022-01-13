@@ -143,7 +143,7 @@
                     <div class="form-check rut selectt center ">
                         <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
-                               <input class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° run" oninput="checkRut()">
+                               <input value="{{ old('rut') }}" class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° RUN" oninput="checkRut()">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">
@@ -168,7 +168,7 @@
                     <label for="num_rut" id="error_pass" class="dato_label"></label>
 
                     <div class="form-check">
-                        <button type="submit" id="buttonSub" class="btn btn-success" disabled>Siguiente</button>
+                        <button type="submit" id="buttonSub" class="btn btn-success">Siguiente</button>
                     </div>
                 </div>
                 
@@ -185,13 +185,14 @@
                     $(".selectt").not(targetBox).hide();
                     $(targetBox).show();
                 });
+                
             });
 
 
 
             // Esta funcion limpia el input del rut en caso de que se seleccione pasaporte para no tener conflictos al momento de hacer submit
             if(document.getElementById('flexRut').checked){
-                document.getElementById("buttonSub").disabled = true;
+                // document.getElementById("buttonSub").disabled = true;
                 var pass = document.getElementById("pasaporte");
                 function msg_pass(){
                     document.getElementById("rut").value = "";
@@ -207,14 +208,14 @@
             if(document.getElementById('flexRut').checked){
                 // Esta funcion limpia el input del pasaporte en caso de que se seleccione rut para no tener conflictos al momento de hacer submit
                 function msg_rut(){
-                    document.getElementById("buttonSub").disabled = true;
+                    // document.getElementById("buttonSub").disabled = true;
                     document.getElementById("pasaporte").value = "";
                     var error = document.getElementById("error");
                     error.textContent = "";
                 }
                 // Funcion encargada de verificar si el digito verificador esta vacio, ademas de validar el rut con su digito verificador
                 function checkRut() {
-                    document.getElementById("buttonSub").disabled = true;
+                    // document.getElementById("buttonSub").disabled = true;
                     var valor = document.getElementById("rut").value;
                     var dv = document.getElementById("dv").value;
                     var button = document.getElementById("buttonSub");
@@ -222,53 +223,52 @@
 
                     error.textContent = "";
 
-                    if(dv==='' || valor===''){
-                        button.disabled = true;
-                    } else {
+                    // if(dv==='' || valor===''){
+                    //     button.disabled = true;
+                    // } else {
 
-                        // Calcular Dígito Verificador
-                        suma = 0;
-                        multiplo = 2;
-                        
-                        // Para cada dígito del Cuerpo
-                        for(i=1;i<=valor.length;i++) {
-                        
-                            // Obtener su Producto con el Múltiplo Correspondiente
-                            index = multiplo * valor.charAt(valor.length - i);
-                            
-                            // Sumar al Contador General
-                            suma = suma + index;
-                            
-                            // Consolidar Múltiplo dentro del rango [2,7]
-                            if(multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+                    // Calcular Dígito Verificador
+                    suma = 0;
+                    multiplo = 2;
                     
-                        }
+                    // Para cada dígito del Cuerpo
+                    for(i=1;i<=valor.length;i++) {
+                    
+                        // Obtener su Producto con el Múltiplo Correspondiente
+                        index = multiplo * valor.charAt(valor.length - i);
                         
-                        // Calcular Dígito Verificador en base al Módulo 11
-                        dvEsperado = 11 - (suma % 11);
+                        // Sumar al Contador General
+                        suma = suma + index;
                         
-                        // Casos Especiales (0 y K)
-                        dv = (dv == 'K')?10:dv;
-                        dv = (dv == 'k')?10:dv;
-                        dv = (dv == 0)?11:dv;
-                        
-                        // Validar que el Cuerpo coincide con su Dígito Verificador
-                        if((dvEsperado != dv) || (valor.length <7 )) { 
-                            // rut.setCustomValidity("RUT Inválido");
-                            error.textContent = "Su número de rut con el dígito verificador no coinciden";
-                            error.style.color = "red";
-                            button.disabled = true;
-                        }
-
-                        else{
-                            button.disabled = false;
-                            error.textContent = ""
-                        }
-                        
-                        // Si todo sale bien, eliminar errores (decretar que es válido)
+                        // Consolidar Múltiplo dentro del rango [2,7]
+                        if(multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+                
                     }
                     
+                    // Calcular Dígito Verificador en base al Módulo 11
+                    dvEsperado = 11 - (suma % 11);
+                    
+                    // Casos Especiales (0 y K)
+                    dv = (dv == 'K')?10:dv;
+                    dv = (dv == 'k')?10:dv;
+                    dv = (dv == 0)?11:dv;
+                    
+                    // Validar que el Cuerpo coincide con su Dígito Verificador
+                    if((dvEsperado != dv) || (valor.length <7 )) { 
+                        // rut.setCustomValidity("RUT Inválido");
+                        error.textContent = "Su número de rut con el dígito verificador no coinciden";
+                        error.style.color = "red";
+                        button.disabled = true;
+                    }
+
+                    else{
+                        button.disabled = false;
+                        error.textContent = ""
+                    }
+                        
+                        // Si todo sale bien, eliminar errores (decretar que es válido)
                 }
+                    
             }
         </script>
 

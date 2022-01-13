@@ -54,6 +54,19 @@
                 color: #636b6f;
             }
         </style>
+
+        <script>
+            function isMobile(){
+                return (
+                    (navigator.userAgent.match(/Android/i)) ||
+                    (navigator.userAgent.match(/webOS/i)) ||
+                    (navigator.userAgent.match(/iPhone/i)) ||
+                    (navigator.userAgent.match(/iPod/i)) ||
+                    (navigator.userAgent.match(/iPad/i)) ||
+                    (navigator.userAgent.match(/BlackBerry/i))
+                );
+            }
+        </script>
     </head>
 
 
@@ -62,7 +75,7 @@
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <div class="separacion">
                 <h2>Módulo de Trazabilidad</h2>
-                <small> Confirme su número de Teléfono </small>
+                <small> Confirme sus datos personales: {{ $n_rut }}</small>
             </div>
 
             <div class="container">
@@ -84,12 +97,12 @@
                                      que están en la base de datos-->
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_p" class="datos form-label">Apellido paterno</label>
-                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
+                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="apellido_m" class="datos form-label">Apellido materno</label>
-                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ]{1,70}">
+                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
@@ -121,21 +134,22 @@
                                     esta seccion del formulario-->
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef" class="datos form-label">Número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="45 / 569"  minlength="7" maxlength="11"  
-                                        required pattern="[0-9]+" oninput="checkNum()"/>
+                                        <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="45 / 569"  minlength="7" maxlength="12"  
+                                        required pattern="[0-9]" oninput="checkNum()"/>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef2" class="datos form-label">Confirme su número número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569"  minlength="7" maxlength="11" 
-                                        required pattern="[0-9]+" oninput="checkNum()"/>
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569"  minlength="7" maxlength="12" 
+                                        required pattern="[0-9]" oninput="checkNum()"/>
                                     </div>
 
                                     <small id="error"></small>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="email" class="datos form-label">E-mail</label>
-                                        <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="visi_email" placeholder="Example@gmail.com">
+                                        <input type="email" class="form-control" pattern="[a-zA-Z0-9!#$%&'*\/=?^_`{|}~+-]([\.]?[a-zA-Z0-9!#$%&'*\/=?^_`{|}~+-])+@[a-zA-Z0-9]([^@&%$/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?"
+                                        name="visi_email" placeholder="Example@gmail.com">
                                     </div><br>
 
                                     <div class="form-check container col-md-4 mb-3">

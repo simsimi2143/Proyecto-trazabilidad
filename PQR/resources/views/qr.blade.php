@@ -31,34 +31,25 @@
                 display: block;
                 text-align: center;
             }
-
-            .full-height { height: 100vh; }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
             .separacion{
                 padding: 3%;
                 position: relative;
+                display: block;
             }
 
             #previsualizacion{
-                margin: 0 auto;
-                clip-path: inset(23% 13% 35% 10%);
+                clip-path: inset(0 13% 48% 10%);
                 width: 70%;
+                display: absolute;
+                text-align: center;
+                margin-top: 0 auto;            
+            }
+
+            #video{
+                width: auto;
                 height: auto;
-                display: block; 
-                display: inline-block;
-                line-height: 0;
-                font-size: 3px;
+                justify-content: center;
+                margin: 0 auto;
             }
 
             #code_ambi{
@@ -68,31 +59,34 @@
                 font-weight: bold;
                 font-size: 18pt;
                 position: absolute;
-                top: 550px;
+                top: 60%;
                 left: 4px;
                 right: 2px;
             }
-
             #botones{
                 position: absolute;
-                top: 625px;
+                top: 75%;
                 left: 4px;
                 right: 2px;
-            }
-
-            .title { font-size: 84px; }
-            
-            .m-b-md { margin-bottom: 30px; }
-
-            #video{
-                width: auto;
-                height: auto;
             }
 
             #formulario{
                 margin-bottom: 40px;
             }
         </style>
+
+        <script>
+            function isMobile(){
+                return (
+                    (navigator.userAgent.match(/Android/i)) ||
+                    (navigator.userAgent.match(/webOS/i)) ||
+                    (navigator.userAgent.match(/iPhone/i)) ||
+                    (navigator.userAgent.match(/iPod/i)) ||
+                    (navigator.userAgent.match(/iPad/i)) ||
+                    (navigator.userAgent.match(/BlackBerry/i))
+                );
+            }
+        </script>
     </head>
     
     <body>
@@ -143,8 +137,10 @@
                 // dispositivo en el cual ocupamos, por ende si es que no se registran cámaras 
                 // en el dispositivo arrojará un error y una alerta al usuario
                 Instascan.Camera.getCameras().then(function(cameras) {
-                    if(cameras.length > 0){
-                        scanner.start(cameras[0]);
+                    if(cameras.length > 1) {
+                        scanner.start(cameras[1]);     // 1 es cámara trasera
+                    }else if(cameras.length > 0) {     
+                        scanner.start(cameras[0]);     // 0 es cámara frontal
                     }else{
                         console.error('No se han encontrado cámaras');
                         alert('No se encontraron cámaras');
@@ -154,16 +150,12 @@
                     alert("Error:" + e);
                 });
 
-                window.navigator = window.navigator || {};
-
                 // Ahora mediante este segmento de código reproduciremos un sonido cada vez que la cámara lee el qr
                 // y escribiendolo automáticamente en el input de qr para ahorrar trabajo al usuario.
                 scanner.addListener('scan', function(respuesta) {
                     sonido.play();
                     document.getElementById('code_ambi').value=respuesta; //code_ambi es el input para escribir el QR
-                    document.getElementById('code_ambi').addEventListener(function(respuesta){
-                        navigator.vibrate([1000, 500, 1000, 500, 2000]);
-                    });
+                    navigator.vibrate(1000);
                 });
 
             </script>

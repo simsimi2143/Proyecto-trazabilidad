@@ -45,12 +45,19 @@ class EscanerController extends Controller {
                 $query_uct = DB::select("SET NOCOUNT ON; exec TRAZA.dbo.confirma_trazabilidad @traz_tipo = ?, @pers_rut_nro = ?, @pers_dv = ?, @ambi_codigo = ?", [$t_traza,$n_rut,$n_dv,$code_ambi]);
                 $nom_ambi = $query_ambi[0]->ambi_nombre;
                 if($query_uct==[]){
-                    return view('qr');
+                    $estado = 'error';
+                    return view('qr',[
+                        "estado" => $estado,
+                        "n_com" => $nom_com,
+                        "nom_ambi" => $nom_ambi,
+                        "t_traza" => $t_traza
+                    ]);
                 }
                 else{
                     $estado = 'exito';
                     return view('alerts',[
                         "estado" => $estado,
+                        "n_com" => $nom_com,
                         "nom_ambi" => $nom_ambi,
                         "t_traza" => $t_traza
                     ]);

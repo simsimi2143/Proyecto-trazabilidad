@@ -68,6 +68,19 @@
             }
 
         </style>
+
+        <script>
+            function isMobile(){
+                return (
+                    (navigator.userAgent.match(/Android/i)) ||
+                    (navigator.userAgent.match(/webOS/i)) ||
+                    (navigator.userAgent.match(/iPhone/i)) ||
+                    (navigator.userAgent.match(/iPod/i)) ||
+                    (navigator.userAgent.match(/iPad/i)) ||
+                    (navigator.userAgent.match(/BlackBerry/i))
+                );
+            }
+        </script>
     </head>
 
 
@@ -95,19 +108,20 @@
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef" class="datos form-label">Confirme sus datos (*)</label>
-                                        <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="Ingrese número telefónico"  minlength="7" maxlength="12"  
-                                        required pattern="[0-9]+" oninput="checkNum()"/>
+                                        <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="45 / 569"  minlength="7" maxlength="12"  
+                                        required pattern="[0-9]" oninput="checkNum()"/>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="Re: ingrese su número"  minlength="7" maxlength="12" 
-                                        required pattern="[0-9]+" oninput="checkNum()"/>
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569"  minlength="7" maxlength="12" 
+                                        required pattern="[0-9]" oninput="checkNum()"/>
                                     </div>
 
                                     <small id="error"></small>
 
                                     <div class="container col-md-4 mb-3">
-                                        <input type="email" class="form-control" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Correo electrónico">
+                                        <input type="email" class="form-control" name="email" pattern="[a-zA-Z0-9!#$%&'*\/=?^_`{|}~+-]([\.]?[a-zA-Z0-9!#$%&'*\/=?^_`{|}~+-])+@[a-zA-Z0-9]([^@&%$/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?" 
+                                        placeholder="Correo electrónico">
                                     </div>
 
                                     <div class="container col-md-4 mb-3 oficina">
