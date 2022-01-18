@@ -13,7 +13,7 @@ use hisorange\BrowserDetect\Parser as Browser;
 
 class RutPasaporteController extends Controller {
 
-    public function index(){
+    public function index(Request $request){
         $rut_nro = $_POST["rut"];
         $rut_dv  = $_POST["dv"];
         $pass_nro = $_POST["pasaporte"];
@@ -24,14 +24,18 @@ class RutPasaporteController extends Controller {
         if($pass_nro != ''){
             session(['rut_nro' => $_POST['pasaporte']]);
             session(['dv_nro' => $pass_p]);
+            session(['p_pass' => $pass_p]);
+            session(['n_pass' => $pass_nro]);
         }
         if($rut_nro != ''){
             session(['rut_nro' => $_POST['rut']]);
             session(['dv_nro' => $_POST['dv']]);
         }
-        //Declaracion de variables a partir de la informacion de la sesion
+        //Declaracion de varaibles a partir de la informacion de la sesion
         $n_rut = session('rut_nro');
         $n_dv  = session('dv_nro'); 
+
+        $request->input('rut_nro');
 
         //Pregunta si existe la sesion, sino avanza
         if(!session()->has('rut_nro')) {
@@ -81,9 +85,8 @@ class RutPasaporteController extends Controller {
             if ($query_uct == []){
                 // Si no existe en la vista_personas es vacio retorna al registro
                 // return $n_rut.'-'.$n_dv;
-                return view('registro',[
-                    "n_rut" => $a_rut_nro
-                ]);
+                return view('registro', [
+                    "n_rut" => $a_rut_nro]);
             }
             else{
                 //Si existe la persona en la vista_personas

@@ -53,6 +53,8 @@ class RegistroController extends Controller {
                 $sexo_nombre = "Femenino";
             } else if($sexo_codigo == 3) {
                 $sexo_nombre = "Otro";
+            } else if($sexo_codigo == 0) {
+                $sexo_nombre = '';
             } else {
                 $sexo_nombre = '';
             }

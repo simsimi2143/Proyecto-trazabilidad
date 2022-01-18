@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Traza</title>
+        <link rel="icon" href="{{ asset('iconoUCT.png') }}">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
         
         <!--Llamamos a nuesta carpeta public y su contenido bootstrap mediante esta sentencia-->
@@ -26,6 +27,19 @@
                 color: gray;
             }
 
+            .radio{
+                float: right;
+                color: gray;
+            }
+            .centro{
+                margin-right: 10%;
+                color: gray;
+            }
+
+            .vac {
+                color: gray;
+            }
+
             .separacion{
                 padding: 3%;
             }
@@ -45,7 +59,7 @@
                 color: gray;
             }
 
-            #tel1, #tel2{
+            #tel1, #tel2, #mat, #pat, #nom{
                 border-color: green;
             }
 
@@ -89,44 +103,46 @@
                                     <!-- Utilizamos este término para validar el envío del método post mediante un token -->
                                     @csrf
                                     <div class="container col-md-4 mb-3">
-                                        <label for="nombre" class="datos form-label">Nombres</label>
-                                        <input type="text" class="form-control" name="visi_nombres" placeholder="Nombres" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
+                                        <label for="nombre" class="datos form-label">Nombres (*)</label>
+                                        <input type="text" class="form-control" id="nom" name="visi_nombres" placeholder="Nombres" required pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
                                     </div>
 
                                     <!--Mediante un pattern validamos el ingreso de datos al formulario para que estos cunplan con los requisitos 
                                      que están en la base de datos-->
                                     <div class="container col-md-4 mb-3">
-                                        <label for="apellido_p" class="datos form-label">Apellido paterno</label>
-                                        <input type="text" class="form-control" name="visi_paterno" placeholder="Apellido paterno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
+                                        <label for="apellido_p" class="datos form-label">Apellido paterno (*)</label>
+                                        <input type="text" class="form-control" id="pat" name="visi_paterno" placeholder="Apellido paterno" required pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <label for="apellido_m" class="datos form-label">Apellido materno</label>
-                                        <input type="text" class="form-control" name="visi_materno" placeholder="Apellido materno" pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
+                                        <label for="apellido_m" class="datos form-label">Apellido materno (*)</label>
+                                        <input type="text" class="form-control" id="mat" name="visi_materno" placeholder="Apellido materno" required pattern="[a-zA-Z-ZñÑáéíóúÁÉÍÓÚüÜ ]{1,70}">
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="feNa" class="datos form-label">Fecha de nacimiento</label>
-                                        <input type="date" class="form-control" name="visi_fecha_nac">
+                                        <input type="date" id="fecha_nac" onclick="setDate()" class="form-control" name="visi_fecha_nac">
                                     </div><br>
 
                                     <!--Asignamos un valor numerico a cada tipo radio para que de esta forma podamos trabajar en la base de 
                                      datos con estos registros-->
                                     <div class="form-check container col-md-4 mb-3">
-                                        <label for="sexo" class="form-label">
+                                        <label for="sexo" class="datos form-label">
                                             <input id="sexo_codigo" value=1 type="radio" class="form-control" name="sexo_codigo">Masculino 
                                         </label>
 
-                                        <label for="sexo" class="form-label">
+                                        <label for="sexo" class="centro form-label">
                                             <input id="sexo_codigo" value=2 type="radio" class="form-control" name="sexo_codigo">Femenino
                                         </label>
 
-                                        <label for="sexo" class="form-label">
+                                        <label for="sexo" class="radio form-label">
                                             <input id="sexo_codigo" value=3 type="radio" class="form-control" name="sexo_codigo">Otro
                                         </label>
 
+                                        {{-- este radio es para dejarlo oculto y seleccionado por defecto sin afectar a los demás para que no aparezca ninguno 
+                                        preseleccionado --}}
                                         <label for="sexo" class="form-label">
-                                            <input id="sexo_codigo" style="display: none;" value="NN" type="radio" class="form-control" name="sexo_codigo" checked>
+                                            <input id="sexo_codigo" style="display: none;" value=0 type="radio" class="form-control" name="sexo_codigo" checked>
                                         </label>
                                     </div>
 
@@ -134,15 +150,15 @@
                                     esta seccion del formulario-->
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef" class="datos form-label">Número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="45 / 569"  minlength="7" maxlength="12"  
-                                        required pattern="[0-9]" oninput="checkNum()"/>
+                                        <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="45 / 569" required 
+                                        pattern="[0-9]+" minlength="7" maxlength="12" oninput="checkNum()"/>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <label for="telef2" class="datos form-label">Confirme su número número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569"  minlength="7" maxlength="12" 
-                                        required pattern="[0-9]" oninput="checkNum()"/>
-                                    </div>
+                                        <label for="telef2" class="datos form-label">Confirme su número fijo/celular (*)</label>
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569" required 
+                                        pattern="[0-9]+" minlength="7" maxlength="12" oninput="checkNum()"/>
+                                    </div> 
 
                                     <small id="error"></small>
 
@@ -154,15 +170,15 @@
 
                                     <div class="form-check container col-md-4 mb-3">
                                         <h6>Esquema de vacunación</h6><br>
-                                        <label for="vacuna" class="form-label">
+                                        <label for="vacuna" class="datos form-label">
                                             <input type="radio" value="C" class="form-control" name="visi_esquema_completo">Completo
                                         </label>
 
-                                        <label for="vacuna" class="form-label">
+                                        <label for="vacuna" class="form-label vac">
                                             <input type="radio" value="I" class="form-control" name="visi_esquema_completo">Incompleto
                                         </label>
 
-                                        <label for="vacuna" class="form-label">
+                                        <label for="vacuna" class="radio form-label">
                                             <input type="radio" value="S" class="form-control" name="visi_esquema_completo">No realizado
                                         </label>
 
@@ -181,6 +197,10 @@
         </div>
 
         <script>
+            function setDate() {
+                document.getElementById("fecha_nac").value = "1997-01-01"; 
+            }
+
             // Mediante esta función nos aseguramos que los números telefónicos ingresados en ambos campos asigandos a esta tarea
             // sean iguales para así validar este dato 
             function checkNum() {

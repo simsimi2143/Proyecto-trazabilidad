@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Trazabilidad UCT</title>
+        <link rel="icon" href="{{ asset('iconoUCT.png') }}">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto&display=swap" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         
@@ -21,6 +22,15 @@
 
             .datos{
                 float: left;
+                color: gray;
+            }
+
+            .vac {
+                color: gray;
+            }
+
+            .radio{
+                float: right;
                 color: gray;
             }
 
@@ -108,13 +118,13 @@
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef" class="datos form-label">Confirme sus datos (*)</label>
-                                        <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="45 / 569"  minlength="7" maxlength="12"  
-                                        required pattern="[0-9]" oninput="checkNum()"/>
+                                        <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="45 / 569" required 
+                                        pattern="[0-9]+" minlength="7" maxlength="12" oninput="checkNum()"/>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569"  minlength="7" maxlength="12" 
-                                        required pattern="[0-9]" oninput="checkNum()"/>
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569" required 
+                                        pattern="[0-9]+" minlength="7" maxlength="12" oninput="checkNum()"/>
                                     </div>
 
                                     <small id="error"></small>
@@ -131,15 +141,15 @@
 
                                     <div class="form-check container col-md-4 mb-3">
                                         <h6>Esquema de vacunación</h6><br>
-                                        <label for="vacuna" class="form-label">
+                                        <label for="vacuna" class="datos form-label">
                                             <input type="radio" value="C" class="form-control" name="visi_esquema_completo">Completo
                                         </label>
 
-                                        <label for="vacuna" class="form-label">
+                                        <label for="vacuna" class="form-label vac">
                                             <input type="radio" value="I" class="form-control" name="visi_esquema_completo">Incompleto
                                         </label>
 
-                                        <label for="vacuna" class="form-label">
+                                        <label for="vacuna" class="radio form-label">
                                             <input type="radio" value="S" class="form-control" name="visi_esquema_completo">No realizado
                                         </label>
                                         
