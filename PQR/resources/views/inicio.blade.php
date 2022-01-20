@@ -127,8 +127,8 @@
     <body>
         <div class="content">
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
-            <h2>Módulo de Trazabilidad</h2>
-            <small>Registro Entrada/Salida</small><br><br>
+            <h2>Módulo de trazabilidad</h2>
+            <small>Registro entrada/salida</small><br><br>
             <small>Tipo de documento</small>
 
             <form action="{{route('inicio')}}" method="POST" class="form-inline" name="frm1" onload="setValue()"> 
@@ -149,7 +149,7 @@
                     <div class="form-check rut selectt center ">
                         <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
-                               <input value="@if(Session::has('rut_nro')){{ Session::get('rut_nro')}}@endif" inputmode="numeric" class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° RUN" oninput="checkRut()">
+                               <input value="@if(Session::has('rut_nro')){{ Session::get('rut_nro')}}@endif" inputmode="numeric" onkeypress='validate(event)' class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° RUN" oninput="checkRut()">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">
@@ -161,7 +161,7 @@
                     <div class="form-check pasaporte selectt center">
                         <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
-                               <input value="@if(Session::has('p_pass')){{ Session::get('p_pass') }}@endif" class="form-control form-control-lg" inputmode="numeric" size=8 minlength="3" maxlength="12" type="text" pattern="[0-9]+" name="pasaporte" pattern="[A-Za-z0-9]+" id="pasaporte" oninput="checkPass()" placeholder="N° pasaporte">
+                               <input value="@if(Session::has('p_pass')){{ Session::get('p_pass') }}@endif" class="form-control form-control-lg" onkeypress='validate(event)' inputmode="numeric" size=8 minlength="3" maxlength="12" type="text" pattern="[0-9]+" name="pasaporte" pattern="[A-Za-z0-9]+" id="pasaporte" oninput="checkPass()" placeholder="N° pasaporte">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">
@@ -226,8 +226,27 @@
                 var button = document.getElementById("buttonSub");
                 button.disabled = false;
                 var error = document.getElementById("error");
-                error.textContent = "Por favor, ingrese solo los números de su pasaporte";
+                error.textContent = "Por favor, ingrese solo los números de su pasaporte.";
                 error.style.color = "red";
+            }
+
+            // Esta función evita colocar letras en el input del RUN y pasaporte
+            function validate(evt) {
+                var theEvent = evt || window.event;
+
+                if (theEvent.type === 'paste') {
+                    key = event.clipboardData.getData('text/plain');
+                } else {
+                    var key = theEvent.keyCode || theEvent.which;
+                    key = String.fromCharCode(key);
+                }
+                
+                var regex = /[0-9]/;
+                
+                if( !regex.test(key) ) {
+                    theEvent.returnValue = false;
+                    if(theEvent.preventDefault) theEvent.preventDefault();
+                }
             }
             
             
@@ -281,7 +300,7 @@
                 // Validar que el Cuerpo coincide con su Dígito Verificador
                 if((dvEsperado != dv) || (valor.length <7 )) { 
                         // rut.setCustomValidity("RUT Inválido");
-                    error.textContent = "Su número de rut con el dígito verificador no coinciden";
+                    error.textContent = "Su número de RUN con el dígito verificador no coinciden.";
                     error.style.color = "red";
                     button.disabled = true;
                 }

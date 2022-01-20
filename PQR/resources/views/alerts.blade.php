@@ -85,7 +85,7 @@
         <div id="principal" class="content">
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <div class="separacion">
-                <h2>Módulo de Trazabilidad</h2>
+                <h2>Módulo de trazabilidad</h2>
                 <small>Bienvenido/a {{$n_com}}</small>
 
                 <h6>Escanéa o ingresa el código QR a registrar</h6><br>
@@ -131,95 +131,16 @@
                     navigator.vibrate(2000);
                 }
 
-                // A través de este segmento de código instanciamos un nuevo objeto a escanear
-                // definiendo que este nuevo objeto sera obtenido a través de lo captado por la cámara
-                // mediante la etiqueta video, además forma un borde de escaneo de 250 pixeles
+                // A través de este segmento de codigo instanciamos un nuevo objeto a escanear
+                // definiendo que este nuevo objeto sera obtenido a travez de lo captado por la camara
+                // mediante la etiqueta video, ademas forma un borde de escaneo de 250 pixeles
                 var html5QrcodeScanner = new Html5QrcodeScanner(
                     "video", { fps: 10, qrbox: 250 });
                     html5QrcodeScanner.render(onScanSuccess);
-                    
-                    // seteamos las variables globales las cuales determinan
-                    // los tipos de dispositivo usados
-                    class Dispositivo {
-                    esMovil = false
-                    esTablet = false
-                    esAndroid = false
-                    esiPhone = false
-                    esiPad = false
-                    esOrdenador = false
-                    esWindows = false
-                    esLinux = false
-                    esMac = false
-                }
-
-                // a través de este segmento de codigo determinamos
-                // si el tipom de dispositivo usado esta en la instancia de true 
-                // es decir dependiendo de cual se use 
-                // android o pc se activa un true el cual indica que tipo de
-                // dispositivo se uso al momento de inicializar la camara
-                const deteccion = () => {
-                    dispositivo = new Dispositivo()
-
-                    if (navigator.userAgent.toLowerCase().match(/mobile/)){
-                        dispositivo.esMovil = true
-                    }
-                    else {
-                        if (navigator.userAgent.toLowerCase().match(/tablet/))
-                            dispositivo.esTablet = true
-                        else
-                            dispositivo.esOrdenador = true
-                    }
-
-                    // iniciamos condicionales para generar una accion de activación de camara 
-                    // dependiendo de que dispositivo se este usando
-                    if (dispositivo.esMovil == true) {
-                        if (navigator.userAgent.toLowerCase().match(/android/)) {
-                            dispositivo.esAndroid = true
-                            // se activa la cámara trasera
-                            html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback);
-                        }
-                        
-                        else if (navigator.userAgent.toLowerCase().match(/ipad/)){
-                            dispositivo.esiPad = true
-                            // se activa la cámara trasera
-                            html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback);
-                        } 
-                        
-                        else {
-                            dispositivo.esiPhone = true
-                            html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback);
-                        }
-                    } 
-                    
-                    else if(dispositivo.esTablet == true){
-
-                    } 
-                    
-                    else {
-                        if (navigator.userAgent.toLowerCase().match(/mac/)) {
-                            dispositivo.esMac = true
-                            // se activa la cámara frontal
-                            html5QrCode.start({ facingMode: "user" }, config, qrCodeSuccessCallback);
-
-                        } 
-                        
-                        else if(navigator.userAgent.toLowerCase().match(/linux/)){
-                            dispositivo.esLinux = true
-                            html5QrCode.start({ facingMode: "user" }, config, qrCodeSuccessCallback);
-
-                        } 
-                        
-                        else {
-                            dispositivo.esWindows = true
-                            html5QrCode.start({ facingMode: "user" }, config, qrCodeSuccessCallback);
-                        }
-                    }
-                }
-
-                // se llama la funcion de detectar el dispositivo
-                window.addEventListener('load', deteccion())
             </script>
         </div>
+
+        
 
         <script>
             // Script encargado de devolver la alerta según el valor que tenga el input oculto de id "estado"

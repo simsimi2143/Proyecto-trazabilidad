@@ -88,7 +88,7 @@
         <div id="principal" class="content">
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <div class="separacion">
-                <h2>Módulo de Trazabilidad</h2>
+                <h2>Módulo de trazabilidad</h2>
                 <small> Confirme sus datos personales: {{ $n_rut }}</small>
             </div>
 
@@ -99,7 +99,7 @@
                             <div class="card-body">
                                 <!-- El formulario funciona por el método post para el envío de datos los cuales deben pasar por el controller
                                 y los onSubmit son alertas que indican si los datos del usuario son correctos y le pregunta para continuar-->
-                                <form action="{{route('registro')}}" method="POST" onSubmit="return confirm('Está seguro de los datos ingresados?');">
+                                <form action="{{route('registro')}}" method="POST" onSubmit="return confirm('¿Está seguro de los datos ingresados?');">
                                     <!-- Utilizamos este término para validar el envío del método post mediante un token -->
                                     @csrf
                                     <div class="container col-md-4 mb-3">
@@ -150,14 +150,14 @@
                                     esta seccion del formulario-->
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef" class="datos form-label">Número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="45 / 569" required 
-                                        pattern="[0-9]+" minlength="7" maxlength="12" oninput="checkNum()"/>
+                                        <input type="tel" class="form-control" id="tel1" name="visi_fono_per" placeholder="Ej. 56912341234" required 
+                                        pattern="[0-9]+" minlength="7" maxlength="12" onkeypress='validate(event)' oninput="checkNum()"/>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
                                         <label for="telef2" class="datos form-label">Confirme su número fijo/celular (*)</label>
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569" required 
-                                        pattern="[0-9]+" minlength="7" maxlength="12" oninput="checkNum()"/>
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="Ej. 56912341234 " required 
+                                        pattern="[0-9]+" minlength="7" maxlength="12" onkeypress='validate(event)' oninput="checkNum()"/>
                                     </div> 
 
                                     <small id="error"></small>
@@ -212,7 +212,7 @@
                 // En nuestra condicional nos aseguramos que estos datos coincidan
                 if (tel1 != tel2){ 
                     button.disabled = true;
-                    error.textContent = "Los números no coinciden";
+                    error.textContent = "Los números no coinciden.";
                     error.style.color = "red";
                 }
                 // Dado que si no es el caso arroje un error debajo de la etiqueta label para que el usuario sea capaz de verla
@@ -220,7 +220,26 @@
                     button.disabled = false;
                     error.textContent = '';
                 }
-            } 
+            }
+            
+            // Esta función evita colocar letras en el input del RUN y pasaporte
+            function validate(evt) {
+                var theEvent = evt || window.event;
+
+                if (theEvent.type === 'paste') {
+                    key = event.clipboardData.getData('text/plain');
+                } else {
+                    var key = theEvent.keyCode || theEvent.which;
+                    key = String.fromCharCode(key);
+                }
+                
+                var regex = /[0-9]/;
+                
+                if( !regex.test(key) ) {
+                    theEvent.returnValue = false;
+                    if(theEvent.preventDefault) theEvent.preventDefault();
+                }
+            }
         </script>
 
         <!--Llamamos a nuesta carpeta public y su contenido bootstrap mediante esta sentencia-->

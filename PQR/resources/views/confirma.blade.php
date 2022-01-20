@@ -98,7 +98,7 @@
         <div id="principal" class="content">
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
             <div class="separacion">
-                <h2>Módulo de Trazabilidad</h2>
+                <h2>Módulo de trazabilidad</h2>
                 <small> Confirme los datos requeridos</small>
             </div>
             
@@ -117,21 +117,23 @@
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <label for="telef" class="datos form-label">Confirme sus datos (*)</label>
-                                        <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="45 / 569" required 
-                                        pattern="[0-9]+" minlength="7" maxlength="12" oninput="checkNum()"/>
+                                        <label for="telef" class="datos form-label">Número fijo/celular (*)</label>
+                                        <input type="tel" class="form-control" id="tel1" name="telef1" placeholder="Ej. 56912341234" required 
+                                        pattern="[0-9]+" minlength="7" maxlength="12" onkeypress='validate(event)' oninput="checkNum()"/>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
-                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="45 / 569" required 
-                                        pattern="[0-9]+" minlength="7" maxlength="12" oninput="checkNum()"/>
+                                        <label for="telef2" class="datos form-label">Confirme su número fijo/celular (*)</label>
+                                        <input type="tel" class="form-control" id="tel2" name="telef2" placeholder="Ej. 56912341234" required 
+                                        pattern="[0-9]+" minlength="7" maxlength="12" onkeypress='validate(event)' oninput="checkNum()"/>
                                     </div>
 
                                     <small id="error"></small>
 
                                     <div class="container col-md-4 mb-3">
+                                        <label for="email" class="datos form-label">E-mail</label>
                                         <input type="email" class="form-control" name="email" pattern="[a-zA-Z0-9!#$%&'*\/=?^_`{|}~+-]([\.]?[a-zA-Z0-9!#$%&'*\/=?^_`{|}~+-])+@[a-zA-Z0-9]([^@&%$/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?" 
-                                        placeholder="Correo electrónico">
+                                        placeholder="Example@gmail.com">
                                     </div>
 
                                     <div class="container col-md-4 mb-3 oficina">
@@ -189,6 +191,25 @@
                 document.getElementById("oficina").style.display= "block";
             }
 
+            // Esta función evita colocar letras en el input del RUN y pasaporte
+            function validate(evt) {
+                var theEvent = evt || window.event;
+
+                if (theEvent.type === 'paste') {
+                    key = event.clipboardData.getData('text/plain');
+                } else {
+                    var key = theEvent.keyCode || theEvent.which;
+                    key = String.fromCharCode(key);
+                }
+                
+                var regex = /[0-9]/;
+                
+                if( !regex.test(key) ) {
+                    theEvent.returnValue = false;
+                    if(theEvent.preventDefault) theEvent.preventDefault();
+                }
+            }
+
             function checkNum() {
                 var tel1 = document.getElementById("tel1").value;
                 var tel2 = document.getElementById("tel2").value;
@@ -197,7 +218,7 @@
                 
                 if (tel1 != tel2){ 
                     button.disabled = true;
-                    error.textContent = "Los números no coinciden";
+                    error.textContent = "Los números no coinciden.";
                     error.style.color = "red";
                 }
                 else {
