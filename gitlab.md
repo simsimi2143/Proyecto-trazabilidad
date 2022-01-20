@@ -17,6 +17,8 @@ Luego para clonar la carpeta del git se usa el comando ```$ git clone https://gi
 
 Una vez clonada dentro de la CMD tienes que crearte una rama propia con el nombre que tu quieras mediante el siguiente comando ```$ git checkout -b nombreTuRama```. En mi caso la rama que creé se llama franco y la creé como ```$ git checkout -b franco```.
 
+Después de crear tu rama la tienes que validar usando el siguiente comando ```git push --set-upstream origin nombreTuRama```.
+
 Una vez hecho esto ya puedes trabajar en el proyecto desde git usando VSCode.
 
 ## Cambios Significativos
