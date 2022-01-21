@@ -112,8 +112,8 @@
                                     <!--Mediante el uso de sesiones llamamos a las variables del n_rut y n_com las cuales nos permiten 
                                     seguir utilizando los datos recogidos del formulario de inicio al momento de ingresar con un rut -->
                                     <div class="container col-md-4 mb-3">
-                                        <label for="num_rut" class="dato_label">{{ $n_rut }}</label><br>
-                                        <label for="num_rut" class="dato_label">{{ $n_com }}</label>
+                                        <label for="num_rut" class="dato_label">@if(Session::has('a_rut_nro')){{ Session::get('a_rut_nro')}}@endif</label><br>
+                                        <label for="num_rut" class="dato_label">@if(Session::has('nom_com')){{ Session::get('nom_com')}}@endif</label>
                                     </div>
 
                                     <div class="container col-md-4 mb-3">
@@ -138,7 +138,7 @@
 
                                     <div class="container col-md-4 mb-3 oficina">
                                         <input type="text" class="form-control" name="oficina" id="oficina" placeholder="Oficina">
-                                        <input value="{{ $carg }}" type="text" class="form-control hide" name="oficina_cargo" id="oficina_cargo" placeholder="Oficina" disabled>
+                                        <input value="@if(Session::has('cargo')){{ Session::get('cargo')}}@endif" type="text" class="form-control hide" name="oficina_cargo" id="oficina_cargo" placeholder="Oficina" disabled>
                                     </div>
 
                                     <div class="form-check container col-md-4 mb-3">

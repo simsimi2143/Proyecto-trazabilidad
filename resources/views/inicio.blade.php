@@ -149,11 +149,11 @@
                     <div class="form-check rut selectt center ">
                         <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
-                               <input value="@if(Session::has('rut_nro')){{ Session::get('rut_nro')}}@endif" inputmode="numeric" onkeypress='validate(event)' class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° RUN" oninput="checkRut()">
+                               <input value="@if(Session::has('rut_nro')){{ Session::get('rut_nro')}}@endif" onpaste="return false;" ondrop="return false;" inputmode="numeric" onkeypress='validate(event)' class="form-control form-control-lg" size=8 minlength="7" maxlength="8" type="text" pattern="[0-9]+" name="rut" id="rut" placeholder="N° RUN" oninput="checkRut()">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">
-                                <input value="@if(Session::has('dv_nro')){{ Session::get('dv_nro') }}@endif" class="form-control form-control-lg" size=2 minlength="1" maxlength="1" type="text" name="dv" id="dv" placeholder="dv" oninput="checkRut()" onkeyup="this.value = this.value.toUpperCase();" >
+                                <input value="@if(Session::has('dv_nro')){{ Session::get('dv_nro') }}@endif" onpaste="return false;" ondrop="return false;" class="form-control form-control-lg" size=2 minlength="1" maxlength="1" type="text" name="dv" id="dv" placeholder="dv" oninput="checkRut()" onkeyup="this.value = this.value.toUpperCase();" >
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                     <div class="form-check pasaporte selectt center">
                         <div class="input-group row pad_left" id="rightbox">
                             <div id="leftbox">
-                               <input value="@if(Session::has('p_pass')){{ Session::get('p_pass') }}@endif" class="form-control form-control-lg" onkeypress='validate(event)' inputmode="numeric" size=8 minlength="3" maxlength="12" type="text" pattern="[0-9]+" name="pasaporte" pattern="[A-Za-z0-9]+" id="pasaporte" oninput="checkPass()" placeholder="N° pasaporte">
+                               <input value="@if(Session::has('p_pass')){{ Session::get('p_pass') }}@endif" onpaste="return false;" ondrop="return false;" class="form-control form-control-lg" onkeypress='validate(event)' inputmode="numeric" size=8 minlength="3" maxlength="12" type="text" pattern="[0-9]+" name="pasaporte" pattern="[A-Za-z0-9]+" id="pasaporte" oninput="checkPass()" placeholder="N° pasaporte">
                             </div>
                             <div class="guion col-1">-</div>
                             <div id="rightbox">

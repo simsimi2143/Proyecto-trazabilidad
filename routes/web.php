@@ -34,6 +34,14 @@ Route::get('alerts', function () {
     return view('inicio');
 });
 
+Route::get('confirm', function () {
+    return view('inicio');
+});
+
+Route::post('confirm', function () {
+    return view('confirma');
+})->name('confirm');
+
 Route::post('alerts', function () {
     return view('alerts');
 });

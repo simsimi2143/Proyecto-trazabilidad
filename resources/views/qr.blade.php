@@ -12,6 +12,10 @@
         <script src="../js/vue.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
+
+        <!-- Los iconos tipo Solid de Fontawesome-->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
         
         <style>
             html, body {
@@ -56,6 +60,12 @@
             #formulario{
                 margin-bottom: 40px;
             }
+
+            #form_tel {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+            }
         </style>
 
         <script>
@@ -75,9 +85,14 @@
     <body>
         <div id="principal" class="content">
             <img src="{{ asset('UCT_logo.png') }}" alt="uct" width="150" height="50">
+            <form action="{{route('confirm')}}" method="post" id="form_tel" onSubmit="return confirm('¿Desea actualizar sus datos personales?');">
+                @csrf
+                    <button type="submit" id="buttonSub" class="btn btn-outline-secondary"><i class="fas fa-user-cog"></i></i></button>
+            </form>
             <div class="separacion">
                 <h2>Módulo de trazabilidad</h2>
                 <small>Bienvenido/a {{$n_com}}</small>
+
 
                 <h6>Escanéa o ingresa el código QR a registrar</h6><br>
 
@@ -109,7 +124,8 @@
 
                 // Mediante esta sentencia iniciamos la llamada a la cámara
                 // mediante el id que esta almacenado en la etiqueta video
-                // definiendole un periodo de 3.6 segundos para capturar un elemento
+                // y aplicando acciones cuando se escanea un código QR con la
+                // etiqueta del input de ingresar un código QR
                 function onScanSuccess(respuesta) {
                     sonido.play();
                     document.getElementById('code_ambi').value=respuesta;   //code_ambi es el input para escribir el QR

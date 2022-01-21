@@ -71,12 +71,15 @@ class RutPasaporteController extends Controller {
 
             //arma el rut con el digito verificador
             $a_rut_nro = $n_rut."-".$n_dv;
+            session(['a_rut_nro' => $a_rut_nro]);
 
             //Define las variables para el cargo en caso de ser de la UCT
             if ($query_cargo==[]){
                 $cargo = 0;
+                session(['cargo' => $cargo]);
             } else{
                 $cargo = $query_cargo[0]->pers_origen;
+                session(['cargo' => $cargo]);
             }
             
 
